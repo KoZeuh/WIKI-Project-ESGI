@@ -26,3 +26,9 @@ COPY ./ /var/www/html
 
 # Démarrer Apache et MariaDB au lancement du conteneur
 CMD ["apachectl", "-D", "FOREGROUND"]
+
+
+#Commandes pour l'execution du dockerfile
+
+#docker build -t wiki-project .
+#docker run -p 8080:80 -p 33060:3306 wiki-project
