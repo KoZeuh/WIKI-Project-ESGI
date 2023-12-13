@@ -6,15 +6,18 @@ class FrontController
 {
     public function run()
     {
-        // Obtenez le chemin de la requête
         $uri = $_SERVER['REQUEST_URI'];
 
-        // Exemple simple de routage basé sur l'URI
-        if ($uri === '/user') {
+        if ($uri === '/'){
+            $controller = new Controller\HomeController();
+            $controller->index();
+        } elseif ($uri === '/user') {
             $controller = new Controller\UserController();
             $controller->index();
+        } elseif ($uri === '/article') {
+            $controller = new Controller\ArticleController();
+            $controller->index();
         } else {
-            // Gérer les routes non trouvées
             echo '404 Not Found';
         }
     }
