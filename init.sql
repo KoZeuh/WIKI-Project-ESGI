@@ -27,7 +27,7 @@ CREATE TABLE tags (
 CREATE TABLE version_article (
                                  id INT AUTO_INCREMENT PRIMARY KEY,
                                  title VARCHAR(255),
-                                 isvalid BOOLEAN,
+                                 isValid BOOLEAN,
                                  content TEXT,
                                  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                  article_id INT,
