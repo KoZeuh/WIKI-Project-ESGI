@@ -1,6 +1,7 @@
 <!-- Templates/admin/index.php -->
 
-<?php ob_start(); ?>
+<?php ob_start();
+$pageTitle = "ADMIN | Index"?>
 
 <h1>Liste des Articles</h1>
 
