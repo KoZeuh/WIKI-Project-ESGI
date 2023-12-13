@@ -1,5 +1,4 @@
 <?php
-
 require_once 'Autoloader.php';
 
 use MyApp\FrontController;
