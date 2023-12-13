@@ -1,12 +1,12 @@
 <?php
 
-namespace MyApp\Controller;
+namespace App\Controller;
 
-class ArticleController
+class UserController
 {
     public function index()
     {
         // Logique pour afficher la liste des utilisateurs
-        echo "Affichage de la liste des utilisateursl";
+        echo 'Affichage de la liste des utilisateurs';
     }
 }
