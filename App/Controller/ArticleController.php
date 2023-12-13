@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use \App\DAL
+use \App\DAL;
 
 class ArticleController
 {
