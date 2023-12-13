@@ -9,13 +9,11 @@ class Database
 
     private function __construct()
     {
-        // Configurations de connexion à la base de données
         $host = 'localhost';
         $dbname = 'esgi_wiki';
         $username = 'root';
         $password = 'root';
 
-        // Création de la connexion à la base de données
         $this->connection = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
