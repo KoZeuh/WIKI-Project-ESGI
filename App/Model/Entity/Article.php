@@ -2,11 +2,20 @@
 
 namespace App\Model\Entity;
 
-class Article 
+use App\Model\Repository\VersionRepository;
+
+class Article
 {
     private $id;
-    private $updatedAt;
+    private $createdAt;
     private $tags;
+
+    public function __construct($id, $createdAt, $tags)
+    {
+        $this->id = $id;
+        $this->createdAt = $createdAt;
+        $this->tags = $tags;
+    }
 
     /**
      * @return mixed
@@ -27,17 +36,17 @@ class Article
     /**
      * @return mixed
      */
-    public function getUpdatedAt()
+    public function getCreatedAt()
     {
-        return $this->updatedAt;
+        return $this->createdAt;
     }
 
     /**
-     * @param mixed $updatedAt
+     * @param mixed $createdAt
      */
-    public function setUpdatedAt($updatedAt)
+    public function setCreatedAt($createdAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->$createdAt = $createdAt;
     }
 
     /**
@@ -45,7 +54,11 @@ class Article
      */
     public function getTags()
     {
-        return $this->tags;
+        if (substr($this->tags, -1) == ',') {
+            return substr($this->tags, 0, -1);
+        } else {
+            return $this->tags;
+        }
     }
 
     /**
@@ -56,5 +69,21 @@ class Article
         $this->tags = $tags;
     }
 
+    public function getLastVersion()
+    {
+        $version = new VersionRepository();
+        $version = $version->getVersion($this->id);
+        return new Version($version['id'], $version['title'], $version['isValid'], $version['content'], $version['updatedAt'], $version['article_id'], $version['user_id']);
+    }
 
+    public function getVersions()
+    {
+        $versions = new VersionRepository();
+        $versions = $versions->getVersions($this->id);
+        $versionsAsObjects = [];
+        foreach ($versions as $version) {
+            $versionsAsObjects[] = new Version($version['id'], $version['title'], $version['isValid'], $version['content'], $version['updatedAt'], $version['article_id'], $version['user_id']);
+        }
+        return $versionsAsObjects;
+    }
 }

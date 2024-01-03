@@ -25,6 +25,18 @@ class FrontController
                 $controller = new Controller\AdminController();
                 $controller->index();
                 break;
+            case '/admin/articles':
+                $controller = new Controller\AdminController();
+                $controller->articles();
+                break;
+            case '/article/create':
+                $controller = new Controller\ArticleController();
+                $controller->create();
+                break;
+            case '/article/create/submit':
+                $controller = new Controller\ArticleController();
+                $controller->createSubmit();
+                break;
             default:
                 echo '404 Not Found';
         }
