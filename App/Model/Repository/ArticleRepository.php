@@ -62,4 +62,17 @@ class ArticleRepository
             return [];
         }
     }
+
+    public function getRandomArticle()
+    {
+        try {
+            $query = "SELECT * FROM article ORDER BY RAND() LIMIT 1";
+            $statement = $this->db->query($query);
+
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
+        }
+    }
 }

@@ -54,11 +54,7 @@ class Article
      */
     public function getTags()
     {
-        if (substr($this->tags, -1) == ',') {
-            return substr($this->tags, 0, -1);
-        } else {
-            return $this->tags;
-        }
+        return explode(',', $this->tags);
     }
 
     /**
