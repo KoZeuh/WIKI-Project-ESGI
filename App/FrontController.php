@@ -8,10 +8,28 @@ class FrontController
     {
         $uri = $_SERVER['REQUEST_URI'];
 
+        session_start();
+
         switch ($uri) {
             case '/':
                 $controller = new Controller\HomeController();
                 $controller->index();
+                break;
+            case "/index":
+                $controller = new Controller\HomeController();
+                $controller->index();
+                break;
+            case '/register':
+                $controller = new Controller\AuthController();
+                $controller->register();
+                break;
+            case '/login':
+                $controller = new Controller\AuthController();
+                $controller->login();
+                break;
+            case '/logout':
+                $controller = new Controller\AuthController();
+                $controller->logout();
                 break;
             case '/user':
                 $controller = new Controller\UserController();

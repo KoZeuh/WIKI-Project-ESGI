@@ -2,7 +2,7 @@
 
 namespace App\Model\Repository;
 
-use \App\Database\Database;
+use App\Database\Database;
 
 class UserRepository
 {
@@ -11,6 +11,65 @@ class UserRepository
     public function __construct()
     {
         $this->db = Database::getInstance()->getConnection();
+    }
+
+    public function registerUser($email, $username, $firstname, $lastname, $password)
+    {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        try {
+            $query = "INSERT INTO user (email, username, firstname, lastname, password) VALUES (:email, :username, :firstname, :lastname, :password)";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':email', $email);
+            $statement->bindParam(':username', $username);
+            $statement->bindParam(':firstname', $firstname);
+            $statement->bindParam(':lastname', $lastname);
+            $statement->bindParam(':password', $hashedPassword);
+            $statement->execute();
+
+            return $this->getUserByUsername($username);
+        } catch (\PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function getUserByUsername($username)
+    {
+        try {
+            $query = "SELECT * FROM user WHERE username = :username";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':username', $username);
+            $statement->execute();
+
+            $user = $statement->fetch(\PDO::FETCH_ASSOC);
+
+            return $user;
+        } catch (\PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function getUserByUsernameAndPassword($username, $password)
+    {
+        try {
+            $query = "SELECT * FROM user WHERE username = :username";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':username', $username);
+            $statement->execute();
+
+            $user = $statement->fetch(\PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                return $user;
+            }
+
+            return null;
+        } catch (\PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return null;
+        }
     }
 
     public function getUsers()
