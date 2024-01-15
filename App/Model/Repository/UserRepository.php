@@ -27,4 +27,21 @@ class UserRepository
             return [];
         }
     }
+
+    public function getUsernameById($id)
+    {
+        try {
+            $query = "SELECT username FROM user WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+
+            $user = $statement->fetch(\PDO::FETCH_ASSOC);
+
+            return $user['username'];
+        } catch (\PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return null;
+        }
+    }
 }
