@@ -29,6 +29,20 @@ class ArticleRepository
         }
     }
 
+    public function getArticlesOfTheMonth()
+    {
+        try {
+            $query = "SELECT * FROM article WHERE createdAt >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+            $statement = $this->db->query($query);
+
+            $articles = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $articles;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
+        }
+    }
+
     public function getArticle($id)
     {
         try {
