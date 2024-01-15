@@ -74,4 +74,5 @@
     </ul>
 </div>
 
+
 <?php include_once 'App/Templates/default/footer.php'; ?>

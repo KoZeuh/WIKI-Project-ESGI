@@ -39,7 +39,7 @@
 
                             <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
 
-                            <?php include_once 'App/Templates/modals/error.php'; ?>
+                            <?php include_once 'App/Templates/default/error.php'; ?>
                         </form>
                     </div>
                 </div>

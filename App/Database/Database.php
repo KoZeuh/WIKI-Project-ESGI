@@ -12,7 +12,7 @@ class Database
         $host = 'localhost';
         $dbname = 'esgi_wiki';
         $username = 'root';
-        $password = 'root';
+        $password = '';
 
         $this->connection = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

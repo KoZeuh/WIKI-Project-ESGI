@@ -64,7 +64,7 @@
 
                             <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
 
-                            <?php include_once 'App/Templates/modals/error.php'; ?>
+                            <?php include_once 'App/Templates/default/error.php'; ?>
                         </form>
                     </div>
                 </div>
