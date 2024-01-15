@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : jeu. 04 jan. 2024 à 18:46
--- Version du serveur : 5.7.39
--- Version de PHP : 8.2.0
+-- Hôte : 127.0.0.1:3306
+-- Généré le : lun. 15 jan. 2024 à 10:28
+-- Version du serveur : 8.0.31
+-- Version de PHP : 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,12 +27,15 @@ SET time_zone = "+00:00";
 -- Structure de la table `article`
 --
 
-CREATE TABLE `article` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE IF NOT EXISTS `article` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `tags` varchar(255) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `article`
@@ -46,21 +49,25 @@ INSERT INTO `article` (`id`, `createdAt`, `tags`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `articleOfTheDay`
+-- Structure de la table `articleoftheday`
 --
 
-CREATE TABLE `articleOfTheDay` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `articleoftheday`;
+CREATE TABLE IF NOT EXISTS `articleoftheday` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
-  `id_article` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_article` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_article` (`id_article`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 
 --
--- Déchargement des données de la table `articleOfTheDay`
+-- Déchargement des données de la table `articleoftheday`
 --
 
-INSERT INTO `articleOfTheDay` (`id`, `date`, `id_article`) VALUES
-(16, '2024-01-04', 3);
+INSERT INTO `articleoftheday` (`id`, `date`, `id_article`) VALUES
+(16, '2024-01-04', 3),
+(17, '2024-01-15', 1);
 
 -- --------------------------------------------------------
 
@@ -68,31 +75,35 @@ INSERT INTO `articleOfTheDay` (`id`, `date`, `id_article`) VALUES
 -- Structure de la table `tags`
 --
 
-CREATE TABLE `tags` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tags`;
+CREATE TABLE IF NOT EXISTS `tags` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `utilisateur`
+-- Structure de la table `user`
 --
 
-CREATE TABLE `utilisateur` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
 --
--- Déchargement des données de la table `utilisateur`
+-- Déchargement des données de la table `user`
 --
 
-INSERT INTO `utilisateur` (`id`, `email`, `username`, `firstname`, `lastname`, `password`) VALUES
+INSERT INTO `user` (`id`, `email`, `username`, `firstname`, `lastname`, `password`) VALUES
 (1, 'nikolailemerre@gmail.com', 'Nikoolaii', 'Nikolaï', 'LEMERRE', '4f56fe65c8bd5296ca6a5f95faa0d65fb54b1ad8a87a1f816c7206803bcff938');
 
 -- --------------------------------------------------------
@@ -101,15 +112,19 @@ INSERT INTO `utilisateur` (`id`, `email`, `username`, `firstname`, `lastname`, `
 -- Structure de la table `version_article`
 --
 
-CREATE TABLE `version_article` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `version_article`;
+CREATE TABLE IF NOT EXISTS `version_article` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `isValid` tinyint(1) DEFAULT NULL,
   `content` text,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `article_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `article_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `article_id` (`article_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `version_article`
@@ -122,77 +137,6 @@ INSERT INTO `version_article` (`id`, `title`, `isValid`, `content`, `updatedAt`,
 (4, 'Test', 0, '<p>ceci est un test d\'article</p>', '2024-01-03 16:47:27', 3, 1);
 
 --
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `article`
---
-ALTER TABLE `article`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Index pour la table `articleOfTheDay`
---
-ALTER TABLE `articleOfTheDay`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `tags`
---
-ALTER TABLE `tags`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `version_article`
---
-ALTER TABLE `version_article`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `article_id` (`article_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `article`
---
-ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `articleOfTheDay`
---
-ALTER TABLE `articleOfTheDay`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT pour la table `tags`
---
-ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `version_article`
---
-ALTER TABLE `version_article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- Contraintes pour les tables déchargées
 --
 
@@ -200,14 +144,20 @@ ALTER TABLE `version_article`
 -- Contraintes pour la table `article`
 --
 ALTER TABLE `article`
-  ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `utilisateur` (`id`);
+  ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `articleoftheday`
+--
+ALTER TABLE `articleoftheday`
+  ADD CONSTRAINT `articleoftheday_ibfk_1` FOREIGN KEY (`id_article`) REFERENCES `article` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `version_article`
 --
 ALTER TABLE `version_article`
   ADD CONSTRAINT `version_article_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`),
-  ADD CONSTRAINT `version_article_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `utilisateur` (`id`);
+  ADD CONSTRAINT `version_article_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
