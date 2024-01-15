@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 15 jan. 2024 à 10:28
+-- Généré le : lun. 15 jan. 2024 à 16:30
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `articleoftheday` (
 --
 
 INSERT INTO `articleoftheday` (`id`, `date`, `id_article`) VALUES
-(16, '2024-01-04', 3),
+(16, '2024-01-15', 3),
 (17, '2024-01-15', 1);
 
 -- --------------------------------------------------------
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `lastname` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `user`
