@@ -10,6 +10,23 @@ class User
     private $firstname;
     private $lastname;
     private $password;
+    private $role;
+
+    public function __construct($id, $email, $username, $firstname, $lastname, $password, $role = null)
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->username = $username;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->password = $password;
+        
+        if (empty($role)) {
+            $this->role = 'ROLE_USER';
+        } else {
+            $this->role = $role;
+        }
+    }
 
     /**
      * @return mixed
@@ -106,4 +123,21 @@ class User
     {
         $this->password = $password;
     }
+
+    /**
+     * @return $role string
+    */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param $role string
+    */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
 }
