@@ -24,8 +24,7 @@ class AuthController
                 if ($userModel->getUserByUsername($username)) {
                     $errorsAlert[] = 'Ce nom d\'utilisateur est déjà utilisé !';
                 } else {
-                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-                    $success = $userModel->registerUser($email, $username, $firstname, $lastname, $hashedPassword);
+                    $success = $userModel->registerUser($email, $username, $firstname, $lastname, $password);
         
                     if ($success) {
                         $_SESSION['user'] = new User($success['id'], $success['email'], $success['username'], $success['firstname'], $success['lastname'], $success['password']);
@@ -53,10 +52,10 @@ class AuthController
             $password = $_POST['form_login_password'];
 
             $userModel = new UserRepository();
-            $user = $userModel->getUserByUsername($username);
+            $user = $userModel->getUserByUsernameAndPassword($username, $password);
 
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user'] = new User($user['id'], $user['email'], $user['username'], $user['firstname'], $user['lastname'], $user['password']);
+            if ($user) {
+                $_SESSION['user'] = new User($user['id'], $user['email'], $user['username'], $user['firstname'], $user['lastname'], $user['password'], $user['role']);
 
                 header('Location: /');
                 exit();

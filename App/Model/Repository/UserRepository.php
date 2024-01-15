@@ -54,12 +54,7 @@ class UserRepository
     public function getUserByUsernameAndPassword($username, $password)
     {
         try {
-            $query = "SELECT * FROM user WHERE username = :username";
-            $statement = $this->db->prepare($query);
-            $statement->bindParam(':username', $username);
-            $statement->execute();
-
-            $user = $statement->fetch(\PDO::FETCH_ASSOC);
+            $user = $this->getUserByUsername($username);
 
             if ($user && password_verify($password, $user['password'])) {
                 return $user;
