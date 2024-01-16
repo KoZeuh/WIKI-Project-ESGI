@@ -2,6 +2,8 @@
 
 namespace App\Model\Repository;
 
+use App\Model\Entity\User;
+
 use App\Database\Database;
 
 class UserRepository
@@ -59,7 +61,21 @@ class UserRepository
 
             $user = $statement->fetch(\PDO::FETCH_ASSOC);
 
-            return $user;
+            if (!$user) {
+                return null;
+            }
+
+            $userEntity = new User(
+                $user['id'],
+                $user['email'],
+                $user['username'],
+                $user['firstname'],
+                $user['lastname'],
+                $user['password'],
+                $user['role']
+            );
+
+            return $userEntity;
         } catch (\PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return null;
@@ -71,7 +87,7 @@ class UserRepository
         try {
             $user = $this->getUserByUsername($username);
 
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && password_verify($password, $user->getPassword())) {
                 return $user;
             }
 
@@ -88,9 +104,22 @@ class UserRepository
             $query = "SELECT * FROM user";
             $statement = $this->db->query($query);
 
-            $user = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $users = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $usersObjects = [];
 
-            return $user;
+            foreach ($users as $user) {
+                $usersObjects[] = new User(
+                    $user['id'],
+                    $user['email'],
+                    $user['username'],
+                    $user['firstname'],
+                    $user['lastname'],
+                    $user['password'],
+                    $user['role']
+                );
+            }
+
+            return $usersObjects;
         } catch (\PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];

@@ -2,6 +2,8 @@
 
 namespace App\Model\Repository;
 
+use App\Model\Entity\Article;
+
 use App\Database\Database;
 use PDO;
 use PDOException;
@@ -37,7 +39,13 @@ class ArticleRepository
             $statement = $this->db->query($query);
 
             $articles = $statement->fetchAll(PDO::FETCH_ASSOC);
-            return $articles;
+            $articlesObjects = [];
+
+            foreach ($articles as $article) {
+                $articlesObjects[] = new Article($article['id'], $article['createdAt'], $article['user_id']);
+            }
+
+            return $articlesObjects;
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
@@ -47,18 +55,25 @@ class ArticleRepository
     public function getArticlesOfTheMonth()
     {
         try {
-            $query = "SELECT * FROM article WHERE createdAt >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+            $query = "SELECT * FROM article WHERE createdAt >= DATE_SUB(NOW(), INTERVAL 1 MONTH) LIMIT 9";
             $statement = $this->db->query($query);
 
             $articles = $statement->fetchAll(PDO::FETCH_ASSOC);
-            return $articles;
+            $articlesObjects = [];
+
+            foreach ($articles as $article) {
+                $articlesObjects[] = new Article($article['id'], $article['createdAt'], $article['user_id']);
+            }
+
+
+            return $articlesObjects;
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
         }
     }
 
-    public function getArticle($id)
+    public function getArticleById($id)
     {
         try {
             $query = "SELECT * FROM article WHERE id = :id";
@@ -68,7 +83,11 @@ class ArticleRepository
 
             $article = $statement->fetch(PDO::FETCH_ASSOC);
 
-            return $article;
+            if (!$article) {
+                return null;
+            }
+
+            return new Article($article['id'], $article['createdAt'], $article['user_id']);
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
@@ -85,7 +104,7 @@ class ArticleRepository
             $statement->bindParam(':user_id', $article['user_id']);
             $statement->execute();
 
-            return $this->db->lastInsertId();
+            return new Article($this->db->lastInsertId(), $article['createdAt'], $article['user_id']);
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
@@ -97,8 +116,13 @@ class ArticleRepository
         try {
             $query = "SELECT * FROM article ORDER BY RAND() LIMIT 1";
             $statement = $this->db->query($query);
+            $statement = $statement->fetch(PDO::FETCH_ASSOC);
 
-            return $statement->fetch(PDO::FETCH_ASSOC);
+            if (!$statement) {
+                return [];
+            }
+
+            return new Article($statement['id'], $statement['createdAt'], $statement['user_id']);
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];

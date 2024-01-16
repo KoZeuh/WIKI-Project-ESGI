@@ -33,7 +33,7 @@ class ArticleOfTheDayRepository
     public function getArticlesOfTheDay()
     {
         try {
-            $articleRepository = new ArticleRepository();
+            $articleRepository = ArticleRepository::getInstance();
     
             $dateOfTheDay = date('Y-m-d');
     
@@ -45,15 +45,18 @@ class ArticleOfTheDayRepository
             $articles = $statement->fetchAll(PDO::FETCH_ASSOC);
     
             if (empty($articles)) {
-                // Aucun article pour la date actuelle, en récupérer deux aléatoires
-                $query = "SELECT * FROM article ORDER BY RAND() LIMIT 2";
+                // Aucun article pour la date actuelle, en récupérer deux aléatoires valides
+                $query = "SELECT * FROM version_article va
+                          JOIN article a ON va.article_id = a.id
+                          WHERE va.isValid = 1
+                          ORDER BY RAND() LIMIT 2";
                 $statement = $this->db->prepare($query);
                 $statement->execute();
                 $articles = $statement->fetchAll(PDO::FETCH_ASSOC);
     
                 // Insérer les articles dans la table articleOfTheDay
                 foreach ($articles as $article) {
-                    $query = "INSERT INTO articleOfTheDay (date, id_article) VALUES (:date, :id)";
+                    $query = "INSERT INTO articleOfTheDay (date, article_id) VALUES (:date, :id)";
                     $statement = $this->db->prepare($query);
                     $statement->bindParam(':date', $dateOfTheDay);
                     $statement->bindParam(':id', $article['id']);
@@ -62,11 +65,11 @@ class ArticleOfTheDayRepository
             }
     
             // Récupérer les articles à partir de leurs identifiants
-            $articleIds = array_column($articles, 'id_article');
+            $articleIds = array_column($articles, 'article_id');
             $result = [];
     
             foreach ($articleIds as $articleId) {
-                $result[] = $articleRepository->getArticle($articleId);
+                $result[] = $articleRepository->getArticleById($articleId);
             }
     
             return $result;
@@ -75,5 +78,6 @@ class ArticleOfTheDayRepository
             return [];
         }
     }
+    
     
 }

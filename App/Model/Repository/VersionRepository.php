@@ -2,6 +2,8 @@
 
 namespace App\Model\Repository;
 
+use App\Model\Entity\Version;
+
 use App\Database\Database;
 use PDO;
 use PDOException;
@@ -30,7 +32,7 @@ class VersionRepository
     // Empêche la désérialisation de l'objet
     public function __wakeup() {}
 
-    public function getVersions($id)
+    public function getVersionsByArticleId($id)
     {
         try {
             $query = "SELECT * FROM version_article WHERE article_id = :id";
@@ -39,14 +41,20 @@ class VersionRepository
             $statement->execute();
 
             $versions = $statement->fetchAll(PDO::FETCH_ASSOC);
-            return $versions;
+            $versionsObjects = [];
+
+            foreach ($versions as $version) {
+                $versionsObjects[] = new Version($version['id'], $version['title'], $version['isValid'], $version['content'], $version['updatedAt'], $version['article_id'], $version['user_id']);
+            }
+
+            return $versionsObjects;
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
         }
     }
 
-    public function getVersion($id)
+    public function getVersionByArticleId($id)
     {
         try {
             $query = "SELECT * FROM version_article WHERE article_id = :id ORDER BY updatedAt DESC LIMIT 1";
@@ -55,8 +63,27 @@ class VersionRepository
             $statement->execute();
 
             $version = $statement->fetch(PDO::FETCH_ASSOC);
+            $versionObject = new Version($version['id'], $version['title'], $version['isValid'], $version['content'], $version['updatedAt'], $version['article_id'], $version['user_id']);
 
-            return $version;
+            return $versionObject;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
+        }
+    }
+
+    public function getLastVersionByArticleId($id)
+    {
+        try {
+            $query = "SELECT * FROM version_article WHERE article_id = :id ORDER BY updatedAt DESC LIMIT 1";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+
+            $version = $statement->fetch(PDO::FETCH_ASSOC);
+            $versionObject = new Version($version['id'], $version['title'], $version['isValid'], $version['content'], $version['updatedAt'], $version['article_id'], $version['user_id']);
+
+            return $versionObject;
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
