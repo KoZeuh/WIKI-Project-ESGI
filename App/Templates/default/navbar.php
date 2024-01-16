@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="App/Templates/default/assets/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
 </head>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,7 +26,7 @@
             </li>
             <?php if (!empty($_SESSION['user'])): ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="/articles_list">Liste des articles</a>
+                    <a class="nav-link" href="/article/list">Liste des articles</a>
                 </li>
             <?php endif; ?>
         </ul>
