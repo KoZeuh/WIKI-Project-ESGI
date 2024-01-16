@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Model\Entity\Article;
 use App\Model\Repository\ArticleRepository;
@@ -25,7 +25,7 @@ class AdminController
         $articles = ArticleRepository::getInstance()->getArticles();
         $articlesAsObjects = [];
         foreach ($articles as $article) {
-            $articlesAsObjects[] = new Article($article['id'], $article['createdAt'], $article['tags']);
+            $articlesAsObjects[] = new Article($article->getId(), $article->getCreatedAt(), $article->getUserId());
         }
         include_once './App/Templates/admin/articles/articles.php';
     }
