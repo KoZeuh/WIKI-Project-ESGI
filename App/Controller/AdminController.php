@@ -22,8 +22,7 @@ class AdminController
 
     public function articles()
     {
-        $articles = new ArticleRepository();
-        $articles = $articles->getArticles();
+        $articles = ArticleRepository::getInstance()->getArticles();
         $articlesAsObjects = [];
         foreach ($articles as $article) {
             $articlesAsObjects[] = new Article($article['id'], $article['createdAt'], $article['tags']);

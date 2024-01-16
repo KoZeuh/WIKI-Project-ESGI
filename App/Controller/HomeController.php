@@ -12,7 +12,7 @@ class HomeController
 {
     public function index()
     {
-        $articleOfTheDayRepository = new ArticleOfTheDayRepository();
+        $articleOfTheDayRepository = ArticleOfTheDayRepository::getInstance();
         $articlesOfTheDay = $articleOfTheDayRepository->getArticlesOfTheDay();
     
         $formattedarticlesOfTheDay = [];
@@ -28,7 +28,7 @@ class HomeController
             $userName = null;
     
             if ($createdBy) {
-                $userRepository = new UserRepository();
+                $userRepository = UserRepository::getInstance();
                 $userName = $userRepository->getUsernameById($createdBy);
             }
     
@@ -39,7 +39,7 @@ class HomeController
             ];
         }
 
-        $articleOfTheMonthRepository = new ArticleRepository();
+        $articleOfTheMonthRepository = ArticleRepository::getInstance();
         $articlesOfTheMonth = $articleOfTheMonthRepository->getArticlesOfTheMonth();
 
         foreach ($articlesOfTheMonth as $article) {
@@ -53,7 +53,7 @@ class HomeController
             $userName = null;
 
             if ($createdBy) {
-                $userRepository = new UserRepository();
+                $userRepository = UserRepository::getInstance();
                 $userName = $userRepository->getUsernameById($createdBy);
             }
 

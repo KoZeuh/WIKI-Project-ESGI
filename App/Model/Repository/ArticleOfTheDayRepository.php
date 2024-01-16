@@ -6,14 +6,29 @@ use App\Database\Database;
 use PDO;
 use PDOException;
 
-class articleOfTheDayRepository
+class ArticleOfTheDayRepository
 {
+    private static $instance;
     private $db;
 
     public function __construct()
     {
         $this->db = Database::getInstance()->getConnection();
     }
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    // Empêche le clonage de l'objet
+    public function __clone() {}
+
+    // Empêche la désérialisation de l'objet
+    public function __wakeup() {}
 
     public function getArticlesOfTheDay()
     {

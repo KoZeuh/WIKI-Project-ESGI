@@ -21,16 +21,13 @@ class ArticleController
 //        $user_id = $_SESSION['user']['id'];
         $user_id = 1;
 
-        $articleRepository = new ArticleRepository();
-        $versionRepository = new VersionRepository();
-
         $article = [
             'createdAt' => $date,
             'tags' => $tags,
             'user_id' => $user_id
         ];
 
-        $article_id = $articleRepository->addArticle($article);
+        $article_id = ArticleRepository::getInstance()->addArticle($article);
 
         $version = [
             'title' => $title,
@@ -41,7 +38,7 @@ class ArticleController
             'user_id' => $user_id
         ];
 
-        $versionRepository->addVersion($version);
+        VersionRepository::getInstance()->addVersion($version);
 
 
         header('Location: /');

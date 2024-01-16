@@ -19,7 +19,7 @@ class AuthController
                 $lastname = htmlspecialchars($_POST['form_register_lastname']);
                 $password = $_POST['form_register_password'];
     
-                $userModel = new UserRepository();
+                $userModel = UserRepository::getInstance();
 
                 if ($userModel->getUserByUsername($username)) {
                     $errorsAlert[] = 'Ce nom d\'utilisateur est déjà utilisé !';
@@ -51,7 +51,7 @@ class AuthController
             $username = htmlspecialchars($_POST['form_login_username']);
             $password = $_POST['form_login_password'];
 
-            $userModel = new UserRepository();
+            $userModel = UserRepository::getInstance();
             $user = $userModel->getUserByUsernameAndPassword($username, $password);
 
             if ($user) {
