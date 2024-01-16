@@ -2,52 +2,65 @@
 
 namespace App\Controller;
 
+use DateTime;
+
 use App\Model\Repository\ArticleRepository;
+use App\Model\Repository\UserRepository;
 use App\Model\Repository\VersionRepository;
+use App\Model\Repository\TagArticleRepository;
+use App\Model\Repository\TagRepository;
 
 class ArticleController
 {
-    public function index()
+    public function list()
     {
-        echo 'Affichage de la liste des utilisateurs';
+        $articles = ArticleRepository::getInstance()->getArticles();
+        $formattedArticles = [];
+        $tagsList = TagRepository::getInstance()->getTags();
+
+        foreach ($articles as $articleEntity) {
+            $articleId = $articleEntity->getId();
+            $articleLastValidVersionEntity = VersionRepository::getInstance()->getLastVersionByArticleId($articleId);
+
+
+            if ($articleLastValidVersionEntity) {
+                $createdAt = new DateTime($articleEntity->getCreatedAt());
+                $updatedAt = new DateTime($articleLastValidVersionEntity->getUpdatedAt());
+
+                $formattedArticles[] = [
+                    'article' => $articleEntity,
+                    'version' => $articleLastValidVersionEntity,
+                    'tags' => TagArticleRepository::getInstance()->getTagsByArticleId($articleId),
+                    'createdByUsername' => UserRepository::getInstance()->getUsernameById($articleEntity->getUserId()),
+                    'createdAt' => $createdAt->format('d/m/Y'),
+                    'updatedAt' => $updatedAt->format('d/m/Y')
+                ];
+            }
+        }
+        $pageTitle = 'Liste des articles';
+        include_once './App/Templates/articles/list.php';
     }
-
-    public function createSubmit()
+    
+    public function show($articleId)
     {
-        $title = $_POST['title'];
-        $tags = $_POST['tags'];
-        $content = $_POST['content'];
-        $date = date('Y-m-d H:i:s');
-//        $user_id = $_SESSION['user']['id'];
-        $user_id = 1;
+        $articleEntity = ArticleRepository::getInstance()->getArticleById($articleId);
 
-        $article = [
-            'createdAt' => $date,
-            'tags' => $tags,
-            'user_id' => $user_id
+        if (!$articleEntity) {
+            header('Location: /article/list');
+            return;
+        }
+
+        $formattedArticle = [
+            'article' => $articleEntity,
+            'lastVersion' => VersionRepository::getInstance()->getLastVersionByArticleId($articleId),
+            'versions' => VersionRepository::getInstance()->getVersionsByArticleId($articleId),
+            'tags' => TagArticleRepository::getInstance()->getTagsByArticleId($articleId),
+            'createdByUsername' => UserRepository::getInstance()->getUsernameById($articleEntity->getUserId())
         ];
 
-        $article_id = ArticleRepository::getInstance()->addArticle($article);
-
-        $version = [
-            'title' => $title,
-            'isValid' => 0,
-            'content' => $content,
-            'updatedAt' => $date,
-            'article_id' => $article_id,
-            'user_id' => $user_id
-        ];
-
-        VersionRepository::getInstance()->addVersion($version);
-
-
-        header('Location: /');
+        $pageTitle = 'Détails d\'un article';
+        include_once './App/Templates/articles/show.php';
     }
 
-    public function create()
-    {
-        $editorType = 'create';
-        $pageTitle = 'Création d\'un article';
-        include_once './App/Templates/articles/editor.php';
-    }
 }
+

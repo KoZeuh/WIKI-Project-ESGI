@@ -20,14 +20,15 @@ class AuthController
                 $password = $_POST['form_register_password'];
     
                 $userModel = UserRepository::getInstance();
+                $userEntity = $userModel->getUserByUsername($username);
 
-                if ($userModel->getUserByUsername($username)) {
+                if ($userEntity) {
                     $errorsAlert[] = 'Ce nom d\'utilisateur est déjà utilisé !';
                 } else {
-                    $success = $userModel->registerUser($email, $username, $firstname, $lastname, $password);
+                    $userEntity = $userModel->registerUser($email, $username, $firstname, $lastname, $password);
         
-                    if ($success) {
-                        $_SESSION['user'] = new User($success['id'], $success['email'], $success['username'], $success['firstname'], $success['lastname'], $success['password']);
+                    if ($userEntity) {
+                        $_SESSION['user'] = $userEntity;
                         
                         header('Location: /');
                         exit();
@@ -52,10 +53,10 @@ class AuthController
             $password = $_POST['form_login_password'];
 
             $userModel = UserRepository::getInstance();
-            $user = $userModel->getUserByUsernameAndPassword($username, $password);
+            $userEntity = $userModel->getUserByUsernameAndPassword($username, $password);
 
-            if ($user) {
-                $_SESSION['user'] = new User($user['id'], $user['email'], $user['username'], $user['firstname'], $user['lastname'], $user['password'], $user['role']);
+            if ($userEntity) {
+                $_SESSION['user'] = $userEntity;
 
                 header('Location: /');
                 exit();

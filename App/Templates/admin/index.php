@@ -7,4 +7,4 @@ $pageTitle = "ADMIN | Index" ?>
 
 <?php $content = ob_get_clean(); ?>
 
-<?php include 'base.php'; ?>
+<?php include 'App/Templates/admin/base.php'; ?>

@@ -4,63 +4,72 @@ namespace App\Controller;
 
 use DateTime;
 use App\Model\Entity\Article;
+
 use App\Model\Repository\ArticleOfTheDayRepository;
 use App\Model\Repository\ArticleRepository;
 use App\Model\Repository\UserRepository;
+use App\Model\Repository\VersionRepository;
+use App\Model\Repository\TagArticleRepository;
 
 class HomeController
 {
     public function index()
     {
         $articleOfTheDayRepository = ArticleOfTheDayRepository::getInstance();
+        $articleOfTheMonthRepository = ArticleRepository::getInstance();
+        $userRepository = UserRepository::getInstance();
+
+
         $articlesOfTheDay = $articleOfTheDayRepository->getArticlesOfTheDay();
+        $articlesOfTheMonth = $articleOfTheMonthRepository->getArticlesOfTheMonth();
+
+        $formattedArticlesOfTheDay = [];
+        $formattedArticlesOfTheMonth = [];
     
-        $formattedarticlesOfTheDay = [];
-    
-        foreach ($articlesOfTheDay as $article) {
-            $dateTime = new DateTime($article['createdAt']);
-            $newDateFormat = $dateTime->format('d/m/Y');
-    
-            $articleEntity = new Article($article['id'], $newDateFormat, $article['tags']);
-            $version = $articleEntity->getLastVersion();
-    
-            $createdBy = $version->getUserId();
-            $userName = null;
+        foreach ($articlesOfTheDay as $articleEntity) {
+            $articleId = $articleEntity->getId();
+
+            $articleLastValidVersionEntity = VersionRepository::getInstance()->getLastVersionByArticleId($articleId);
+            $tagsEntity = TagArticleRepository::getInstance()->getTagsByArticleId($articleId);
+
+            $createdAt = new DateTime($articleEntity->getCreatedAt());
+            $createdBy = $articleLastValidVersionEntity->getUserId();
+            $createdByUserName = null;
     
             if ($createdBy) {
-                $userRepository = UserRepository::getInstance();
-                $userName = $userRepository->getUsernameById($createdBy);
+                $createdByUserName = $userRepository->getUsernameById($createdBy);
             }
     
-            $formattedarticlesOfTheDay[] = [
+            $formattedArticlesOfTheDay[] = [
                 'article' => $articleEntity,
-                'version' => $version,
-                'createdByUsername' => $userName
+                'version' => $articleLastValidVersionEntity,
+                'tags' => $tagsEntity,
+                'createdByUsername' => $createdByUserName,
+                'createdAt' => $createdAt->format('d/m/Y')
             ];
         }
 
-        $articleOfTheMonthRepository = ArticleRepository::getInstance();
-        $articlesOfTheMonth = $articleOfTheMonthRepository->getArticlesOfTheMonth();
+        
+        foreach ($articlesOfTheMonth as $articleEntity) {
+            $articleId = $articleEntity->getId();
 
-        foreach ($articlesOfTheMonth as $article) {
-            $dateTime = new DateTime($article['createdAt']);
-            $newDateFormat = $dateTime->format('d/m/Y');
+            $articleLastValidVersionEntity = VersionRepository::getInstance()->getLastVersionByArticleId($articleId);
+            $tagsEntity = TagArticleRepository::getInstance()->getTagsByArticleId($articleId);
 
-            $articleEntity = new Article($article['id'], $newDateFormat, $article['tags']);
-            $version = $articleEntity->getLastVersion();
-            
-            $createdBy = $version->getUserId();
-            $userName = null;
-
+            $createdAt = new DateTime($articleEntity->getCreatedAt());
+            $createdBy = $articleLastValidVersionEntity->getUserId();
+            $createdByUserName = null;
+    
             if ($createdBy) {
-                $userRepository = UserRepository::getInstance();
-                $userName = $userRepository->getUsernameById($createdBy);
+                $createdByUserName = $userRepository->getUsernameById($createdBy);
             }
-
+    
             $formattedArticlesOfTheMonth[] = [
                 'article' => $articleEntity,
-                'version' => $version,
-                'createdByUsername' => $userName
+                'version' => $articleLastValidVersionEntity,
+                'tags' => $tagsEntity,
+                'createdByUsername' => $createdByUserName,
+                'createdAt' => $createdAt->format('d/m/Y')
             ];
         }
 
