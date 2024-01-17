@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 16 jan. 2024 à 22:24
+-- Généré le : mer. 17 jan. 2024 à 10:36
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -46,8 +46,7 @@ INSERT INTO `article` (`id`, `createdAt`, `user_id`) VALUES
 (3, '2024-01-03 16:47:27', 1),
 (4, '2024-01-16 18:56:49', 8),
 (5, '2024-01-16 18:56:49', 8),
-(6, '2024-01-16 18:56:56', 8),
-(8, '2024-01-16 18:56:56', 8);
+(6, '2024-01-16 18:56:56', 8);
 
 -- --------------------------------------------------------
 
@@ -62,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `articleoftheday` (
   `article_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_article` (`article_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `articleoftheday`
@@ -70,7 +69,9 @@ CREATE TABLE IF NOT EXISTS `articleoftheday` (
 
 INSERT INTO `articleoftheday` (`id`, `date`, `article_id`) VALUES
 (22, '2024-01-16', 6),
-(23, '2024-01-16', 2);
+(23, '2024-01-16', 2),
+(24, '2024-01-17', 4),
+(25, '2024-01-17', 5);
 
 -- --------------------------------------------------------
 
@@ -105,21 +106,22 @@ INSERT INTO `tag` (`id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `tag_article`;
 CREATE TABLE IF NOT EXISTS `tag_article` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `tag_id` int NOT NULL,
   `article_id` int NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `tag_id` (`tag_id`,`article_id`),
   KEY `article_id` (`article_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `tag_article`
 --
 
-INSERT INTO `tag_article` (`tag_id`, `article_id`) VALUES
-(2, 6),
-(2, 8),
-(5, 4),
-(6, 4);
+INSERT INTO `tag_article` (`id`, `tag_id`, `article_id`) VALUES
+(3, 2, 6),
+(1, 5, 4),
+(2, 6, 4);
 
 -- --------------------------------------------------------
 
@@ -175,12 +177,12 @@ INSERT INTO `version_article` (`id`, `title`, `isValid`, `content`, `updatedAt`,
 (1, 'Chob – Pour rechercher des applications Linux (Flatpack, Snap et AppImage)', 1, '<h1>Content 1</h1>\r\n<p>This is the first content of the first version of the article', '2023-12-26 16:59:18', 1, 1),
 (2, 'Chob – Pour rechercher des applications Linux (Flatpack, Snap et AppImage)', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2023-12-26 17:00:19', 1, 1),
 (5, 'Présentation de la version 0.8 de JQuery !', 0, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-10 17:00:19', 4, 8),
-(6, 'Présentation de la version 1.0 de JQuery !', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-14 17:00:19', 4, 8),
+(6, 'Présentation de la version 1.0 de JQuery !', 1, '<h1>Présentation v1</h1>\r\n<p>Coucou alors c\'est juste un paragraphe de test !</p>\r\n\r\n<h2 class=\"text-center\">Ce titre est centré et ceci est un test ! </h2>', '2024-01-14 17:00:19', 4, 8),
 (7, 'Chob – Pour rechercher des applications Windows (Flatpack, Snap et AppImage)', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2023-12-26 17:00:19', 2, 1),
 (8, 'Chob – Pour rechercher des applications MACOS (Flatpack, Snap et AppImage)', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2023-12-26 17:00:19', 3, 1),
 (9, 'Présentation de la version 5.0 de Symfony !', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 5, 8),
-(10, 'Présentation de la version 10.0 de FiveM !', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 6, 8),
-(11, 'Présentation de la version 11.0 de FiveM !', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 8, 8);
+(10, 'Présentation de la version 10.0 de FiveM !', 0, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 6, 8),
+(11, 'Présentation de la version 11.0 de FiveM !', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 6, 8);
 
 --
 -- Contraintes pour les tables déchargées
