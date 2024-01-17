@@ -30,6 +30,7 @@ class ArticleController
                 $formattedArticles[] = [
                     'article' => $articleEntity,
                     'version' => $articleLastValidVersionEntity,
+                    'countOfVersions' => VersionRepository::getInstance()->getCountVersionsByArticleId($articleId),
                     'tags' => TagArticleRepository::getInstance()->getTagsByArticleId($articleId),
                     'createdByUsername' => UserRepository::getInstance()->getUsernameById($articleEntity->getUserId()),
                     'createdAt' => $createdAt->format('d/m/Y'),

@@ -54,6 +54,23 @@ class VersionRepository
         }
     }
 
+    public function getCountVersionsByArticleId($id)
+    {
+        try {
+            $query = "SELECT COUNT(*) FROM version_article WHERE article_id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+
+            $count = $statement->fetch(PDO::FETCH_ASSOC);
+
+            return $count['COUNT(*)'];
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return 0;
+        }
+    }
+
     public function getVersionByArticleId($id)
     {
         try {

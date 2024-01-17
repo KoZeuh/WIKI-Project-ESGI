@@ -31,12 +31,18 @@
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                                     </a>
                                 </div>
+                                <?php if ($formattedArticle['countOfVersions'] > 1): ?>
+                                    <div class="card-footer text-end">
+                                        <span class="badge bg-info"><?= $formattedArticle['countOfVersions'] ?> versions</span>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </a>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
+
 
         <div class="col-lg-4">
             <div class="card mb-4">
