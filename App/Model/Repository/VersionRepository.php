@@ -2,9 +2,8 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\Version;
-
 use App\Database\Database;
+use App\Model\Entity\Version;
 use PDO;
 use PDOException;
 
@@ -27,10 +26,14 @@ class VersionRepository
     }
 
     // Empêche le clonage de l'objet
-    public function __clone() {}
+    public function __clone()
+    {
+    }
 
     // Empêche la désérialisation de l'objet
-    public function __wakeup() {}
+    public function __wakeup()
+    {
+    }
 
     public function getVersionsByArticleId($id)
     {
@@ -151,6 +154,24 @@ class VersionRepository
             $statement->execute();
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
+        }
+    }
+
+    public function getNbVersions()
+    {
+        try {
+            $query = "SELECT COUNT(*) FROM version_article";
+            $statement = $this->db->query($query);
+            $statement = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$statement) {
+                return 0;
+            }
+
+            return $statement['COUNT(*)'];
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return 0;
         }
     }
 }

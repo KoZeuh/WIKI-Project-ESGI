@@ -2,9 +2,10 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\User;
-
 use App\Database\Database;
+use App\Model\Entity\User;
+use PDO;
+use PDOException;
 
 class UserRepository
 {
@@ -25,10 +26,14 @@ class UserRepository
     }
 
     // Empêche le clonage de l'objet
-    public function __clone() {}
+    public function __clone()
+    {
+    }
 
     // Empêche la désérialisation de l'objet
-    public function __wakeup() {}
+    public function __wakeup()
+    {
+    }
 
     public function registerUser($email, $username, $firstname, $lastname, $password)
     {
@@ -45,7 +50,7 @@ class UserRepository
             $statement->execute();
 
             return $this->getUserByUsername($username);
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return null;
         }
@@ -59,7 +64,7 @@ class UserRepository
             $statement->bindParam(':username', $username);
             $statement->execute();
 
-            $user = $statement->fetch(\PDO::FETCH_ASSOC);
+            $user = $statement->fetch(PDO::FETCH_ASSOC);
 
             if (!$user) {
                 return null;
@@ -76,9 +81,42 @@ class UserRepository
             );
 
             return $userEntity;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return null;
+        }
+    }
+
+    public function editUser($user)
+    {
+        try {
+            $query = "UPDATE user SET email = :email, username = :username, firstname = :firstname, lastname = :lastname, role = :role WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $user['id']);
+            $statement->bindParam(':email', $user['email']);
+            $statement->bindParam(':username', $user['username']);
+            $statement->bindParam(':firstname', $user['firstname']);
+            $statement->bindParam(':lastname', $user['lastname']);
+            $statement->bindParam(':role', $user['role']);
+            $statement->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function deleteUser($id)
+    {
+        try {
+            $query = "DELETE FROM user WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return false;
         }
     }
 
@@ -92,7 +130,7 @@ class UserRepository
             }
 
             return null;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return null;
         }
@@ -104,7 +142,7 @@ class UserRepository
             $query = "SELECT * FROM user";
             $statement = $this->db->query($query);
 
-            $users = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $users = $statement->fetchAll(PDO::FETCH_ASSOC);
             $usersObjects = [];
 
             foreach ($users as $user) {
@@ -120,7 +158,7 @@ class UserRepository
             }
 
             return $usersObjects;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
         }
@@ -134,12 +172,30 @@ class UserRepository
             $statement->bindParam(':id', $id);
             $statement->execute();
 
-            $user = $statement->fetch(\PDO::FETCH_ASSOC);
+            $user = $statement->fetch(PDO::FETCH_ASSOC);
 
             return $user['username'];
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return null;
+        }
+    }
+
+    public function getNbUsers()
+    {
+        try {
+            $query = "SELECT COUNT(*) FROM user";
+            $statement = $this->db->query($query);
+            $statement = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$statement) {
+                return 0;
+            }
+
+            return $statement['COUNT(*)'];
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
         }
     }
 }

@@ -31,22 +31,12 @@ class FrontController
                 $controller = new Controller\AuthController();
                 $controller->logout();
                 break;
-            case '/user':
-                $controller = new Controller\Admin\UserController();
-                $controller->index();
-                break;
             case '/article/list':
                 $controller = new Controller\ArticleController();
                 $controller->list();
                 break;
-            case '/article/create':
-                $controller = new Controller\Admin\ArticleController();
-                $controller->create();
-                break;
-            case '/article/create/submit':
-                $controller = new Controller\Admin\ArticleController();
-                $controller->createSubmit();
-                break;
+//          Switch pour l'admin
+//          Affichage des différentes catégories
             case '/admin':
                 $controller = new Controller\Admin\AdminController();
                 $controller->index();
@@ -54,6 +44,27 @@ class FrontController
             case '/admin/articles':
                 $controller = new Controller\Admin\AdminController();
                 $controller->articles();
+                break;
+            case '/admin/user':
+                $controller = new Controller\Admin\AdminController();
+                $controller->users();
+                break;
+            case '/admin/tags':
+                $controller = new Controller\Admin\AdminController();
+                $controller->tags();
+                break;
+            case '/admin/comments':
+                $controller = new Controller\Admin\AdminController();
+                $controller->comments();
+                break;
+//          Gestion des articles
+            case '/article/create':
+                $controller = new Controller\Admin\ArticleController();
+                $controller->create();
+                break;
+            case '/article/create/submit':
+                $controller = new Controller\Admin\ArticleController();
+                $controller->createSubmit();
                 break;
             default:
                 // Ce code permet de gérer les redirections quand l'URL contient des paramètres (ex: /article/show/1, /user/show/1, /article/edit/1, /article/delete/1, etc.)
@@ -64,25 +75,25 @@ class FrontController
                 if (count($segments) >= 3) {
                     $controllerName = ucfirst($segments[1]) . 'Controller';
                     $methodName = $segments[2];
-                    
+
                     // Vérifiez si l'action est "edit" ou "remove"
                     $isEditAction = in_array('edit', $segments);
                     $isRemoveAction = in_array('delete', $segments);
-                
+
                     // Modifiez le nom du contrôleur en fonction de l'action
                     if ($isEditAction || $isRemoveAction) {
                         $controllerName = 'Admin\\' . $controllerName;
                     }
-                
+
                     $controllerClass = "App\\Controller\\$controllerName";
-                
+
                     if (class_exists($controllerClass) && method_exists($controllerClass, $methodName)) {
                         $controller = new $controllerClass();
-                
+
                         return call_user_func_array([$controller, $methodName], array_slice($segments, 3));
                     }
                 }
-                
+
 
                 echo '404 Not Found';
         }

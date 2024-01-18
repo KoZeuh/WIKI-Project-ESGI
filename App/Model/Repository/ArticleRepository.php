@@ -2,9 +2,8 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\Article;
-
 use App\Database\Database;
+use App\Model\Entity\Article;
 use PDO;
 use PDOException;
 
@@ -27,10 +26,14 @@ class ArticleRepository
     }
 
     // Empêche le clonage de l'objet
-    public function __clone() {}
+    public function __clone()
+    {
+    }
 
     // Empêche la désérialisation de l'objet
-    public function __wakeup() {}
+    public function __wakeup()
+    {
+    }
 
     public function getArticles()
     {
@@ -123,6 +126,24 @@ class ArticleRepository
             }
 
             return new Article($statement['id'], $statement['createdAt'], $statement['user_id']);
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
+        }
+    }
+
+    public function getNbArticles()
+    {
+        try {
+            $query = "SELECT COUNT(*) FROM article";
+            $statement = $this->db->query($query);
+            $statement = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$statement) {
+                return 0;
+            }
+
+            return $statement['COUNT(*)'];
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];

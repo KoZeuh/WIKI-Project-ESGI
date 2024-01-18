@@ -7,11 +7,6 @@ use App\Model\Repository\VersionRepository;
 
 class ArticleController
 {
-    public function index()
-    {
-        echo 'Affichage de la liste des utilisateurs';
-    }
-
     public function createSubmit()
     {
         $title = $_POST['title'];

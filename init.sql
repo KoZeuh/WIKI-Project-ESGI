@@ -2,9 +2,9 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le : mer. 17 jan. 2024 à 10:36
--- Version du serveur : 8.0.31
+-- Hôte : localhost:8889
+-- Généré le : jeu. 18 jan. 2024 à 19:29
+-- Version du serveur : 5.7.39
 -- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -27,23 +27,17 @@ SET time_zone = "+00:00";
 -- Structure de la table `article`
 --
 
-DROP TABLE IF EXISTS `article`;
-CREATE TABLE IF NOT EXISTS `article` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `article` (
+  `id` int(11) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `article`
 --
 
 INSERT INTO `article` (`id`, `createdAt`, `user_id`) VALUES
-(1, '2023-12-26 16:57:59', 1),
-(2, '2024-01-03 16:46:38', 1),
-(3, '2024-01-03 16:47:27', 1),
 (4, '2024-01-16 18:56:49', 8),
 (5, '2024-01-16 18:56:49', 8),
 (6, '2024-01-16 18:56:56', 8);
@@ -54,14 +48,11 @@ INSERT INTO `article` (`id`, `createdAt`, `user_id`) VALUES
 -- Structure de la table `articleoftheday`
 --
 
-DROP TABLE IF EXISTS `articleoftheday`;
-CREATE TABLE IF NOT EXISTS `articleoftheday` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `articleoftheday` (
+  `id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `article_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_article` (`article_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
+  `article_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `articleoftheday`
@@ -69,9 +60,9 @@ CREATE TABLE IF NOT EXISTS `articleoftheday` (
 
 INSERT INTO `articleoftheday` (`id`, `date`, `article_id`) VALUES
 (22, '2024-01-16', 6),
-(23, '2024-01-16', 2),
 (24, '2024-01-17', 4),
-(25, '2024-01-17', 5);
+(25, '2024-01-17', 5),
+(26, '2024-01-18', 4);
 
 -- --------------------------------------------------------
 
@@ -79,19 +70,17 @@ INSERT INTO `articleoftheday` (`id`, `date`, `article_id`) VALUES
 -- Structure de la table `tag`
 --
 
-DROP TABLE IF EXISTS `tag`;
-CREATE TABLE IF NOT EXISTS `tag` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `tag` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `tag`
 --
 
 INSERT INTO `tag` (`id`, `name`) VALUES
-(1, 'Linux'),
+(1, 'Linuxe'),
 (2, 'Windows'),
 (3, 'Symfony'),
 (4, 'Laravel'),
@@ -104,15 +93,11 @@ INSERT INTO `tag` (`id`, `name`) VALUES
 -- Structure de la table `tag_article`
 --
 
-DROP TABLE IF EXISTS `tag_article`;
-CREATE TABLE IF NOT EXISTS `tag_article` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tag_id` int NOT NULL,
-  `article_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tag_id` (`tag_id`,`article_id`),
-  KEY `article_id` (`article_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `tag_article` (
+  `id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  `article_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `tag_article`
@@ -129,25 +114,23 @@ INSERT INTO `tag_article` (`id`, `tag_id`, `article_id`) VALUES
 -- Structure de la table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(50) DEFAULT 'ROLE_USER',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+  `role` varchar(50) DEFAULT 'ROLE_USER'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `username`, `firstname`, `lastname`, `password`, `role`) VALUES
-(1, 'nikolailemerre@gmail.com', 'Nikoolaii', 'Nikolaï', 'LEMERRE', '4f56fe65c8bd5296ca6a5f95faa0d65fb54b1ad8a87a1f816c7206803bcff938', 'ROLE_USER'),
-(8, 'a@a.fr', 'kozeuh', 'Kozeuh', 'Dev', '$2y$10$0hkT.oXXqfXhUQSLloTeUOFS5QEMzMgHsgUrx38CQujMMSf2aSHFe', 'ROLE_ADMIN');
+(8, 'a@a.fr', 'kozeuh', 'Kozeuh', 'Dev', '$2y$10$0hkT.oXXqfXhUQSLloTeUOFS5QEMzMgHsgUrx38CQujMMSf2aSHFe', 'ROLE_ADMIN'),
+(9, 'nikolailemerre@gmail.com', 'nikoo', 'Nikolaï', 'LEMERRE', '$2y$10$vZH./rCJdDAxgqYtBkN8A.7EaSeGcVNsrxEvCswQx8H4O83MfSiJ2', 'ROLE_ADMIN');
 
 -- --------------------------------------------------------
 
@@ -155,34 +138,112 @@ INSERT INTO `user` (`id`, `email`, `username`, `firstname`, `lastname`, `passwor
 -- Structure de la table `version_article`
 --
 
-DROP TABLE IF EXISTS `version_article`;
-CREATE TABLE IF NOT EXISTS `version_article` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `version_article` (
+  `id` int(11) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `isValid` tinyint(1) DEFAULT NULL,
   `content` text,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `article_id` int DEFAULT NULL,
-  `user_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `article_id` (`article_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+  `article_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `version_article`
 --
 
 INSERT INTO `version_article` (`id`, `title`, `isValid`, `content`, `updatedAt`, `article_id`, `user_id`) VALUES
-(1, 'Chob – Pour rechercher des applications Linux (Flatpack, Snap et AppImage)', 1, '<h1>Content 1</h1>\r\n<p>This is the first content of the first version of the article', '2023-12-26 16:59:18', 1, 1),
-(2, 'Chob – Pour rechercher des applications Linux (Flatpack, Snap et AppImage)', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2023-12-26 17:00:19', 1, 1),
 (5, 'Présentation de la version 0.8 de JQuery !', 0, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-10 17:00:19', 4, 8),
 (6, 'Présentation de la version 1.0 de JQuery !', 1, '<h1>Présentation v1</h1>\r\n<p>Coucou alors c\'est juste un paragraphe de test !</p>\r\n\r\n<h2 class=\"text-center\">Ce titre est centré et ceci est un test ! </h2>', '2024-01-14 17:00:19', 4, 8),
-(7, 'Chob – Pour rechercher des applications Windows (Flatpack, Snap et AppImage)', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2023-12-26 17:00:19', 2, 1),
-(8, 'Chob – Pour rechercher des applications MACOS (Flatpack, Snap et AppImage)', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2023-12-26 17:00:19', 3, 1),
 (9, 'Présentation de la version 5.0 de Symfony !', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 5, 8),
 (10, 'Présentation de la version 10.0 de FiveM !', 0, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 6, 8),
 (11, 'Présentation de la version 11.0 de FiveM !', 1, '<h1>Content nb2</h1>\r\n<p>This is the second content of the first article</p>', '2024-01-16 17:00:19', 6, 8);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `article`
+--
+ALTER TABLE `article`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Index pour la table `articleoftheday`
+--
+ALTER TABLE `articleoftheday`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_article` (`article_id`);
+
+--
+-- Index pour la table `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `tag_article`
+--
+ALTER TABLE `tag_article`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tag_id` (`tag_id`,`article_id`),
+  ADD KEY `article_id` (`article_id`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `version_article`
+--
+ALTER TABLE `version_article`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `article_id` (`article_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `article`
+--
+ALTER TABLE `article`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pour la table `articleoftheday`
+--
+ALTER TABLE `articleoftheday`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT pour la table `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT pour la table `tag_article`
+--
+ALTER TABLE `tag_article`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT pour la table `version_article`
+--
+ALTER TABLE `version_article`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Contraintes pour les tables déchargées
@@ -192,7 +253,7 @@ INSERT INTO `version_article` (`id`, `title`, `isValid`, `content`, `updatedAt`,
 -- Contraintes pour la table `article`
 --
 ALTER TABLE `article`
-  ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `articleoftheday`
@@ -211,8 +272,8 @@ ALTER TABLE `tag_article`
 -- Contraintes pour la table `version_article`
 --
 ALTER TABLE `version_article`
-  ADD CONSTRAINT `version_article_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`),
-  ADD CONSTRAINT `version_article_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `version_article_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `version_article_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
