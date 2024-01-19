@@ -25,7 +25,7 @@ a. Une API respectant le standard REST permettra de requêter le contenu au form
 b. L'utilisation de l'API demande la création d'une clé d'authentification par l'utilisateur :x: <br>
 
 14) Backoffice réservé aux administrateurs du CMS : <br>
-a. Gestion des utilisateurs :x: <br>
+a. Gestion des utilisateurs :white_check_mark: <br>
 b. Gestion des articles :x: <br>
-c. Gestion des tags :x: <br>
+c. Gestion des tags :white_check_mark: <br>
 d. Gestion des évaluations et commentaires :x: <br>
