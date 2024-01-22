@@ -2,6 +2,8 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Repository\UserRepository;
+
 class Version
 {
     private $id;
@@ -11,6 +13,7 @@ class Version
     private $updatedAt;
     private $article_id;
     private $user_id;
+    private $username;
 
     public function __construct($id, $title, $isValid, $content, $updatedAt, $article_id, $user_id)
     {
@@ -21,6 +24,7 @@ class Version
         $this->updatedAt = $updatedAt;
         $this->article_id = $article_id;
         $this->user_id = $user_id;
+        $this->username = UserRepository::getInstance()->getUsernameById($user_id);
     }
 
     /**
@@ -134,5 +138,14 @@ class Version
     {
         $this->user_id = $user_id;
     }
-    
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+
 }

@@ -86,7 +86,7 @@ $pageTitle = "ADMIN | Articles" ?>
         <?php foreach ($article['versions'] as $version) : ?>
             <tr class="lineVersions hidden <?php echo $article['article']->getId() ?>">
                 <td><?= $version->getId() ?></td>
-                <td><?= $version->getUserId() ?></td>
+                <td><?= $version->getUsername() ?> (<?= $version->getUserId() ?>)</td>
                 <td><?= $version->getTitle() ?></td>
                 <td style="overflow: clip"><?= htmlspecialchars($version->getContent()) ?></td>
                 <td><?= $version->getUpdatedAt() ?></td>
