@@ -44,7 +44,7 @@
         </div>
 
 
-        <div class="col-lg-4">
+        <div class="col-lg-4 mt-3">
             <div class="card mb-4">
                 <div class="card-header">Recherche</div>
                 <div class="card-body">
@@ -85,11 +85,6 @@
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-header">Bloc de droite</div>
-                <div class="card-body">Qu'allons-nous mettre ?</div>
             </div>
         </div>
     </div>
