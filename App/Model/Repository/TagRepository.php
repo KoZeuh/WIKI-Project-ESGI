@@ -54,6 +54,28 @@ class TagRepository
         }
     }
 
+    public function getTagById($id)
+    {
+        try {
+            $query = "SELECT * FROM tag WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+
+            $tag = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$tag) {
+                return null;
+            }
+
+            return new Tag($tag['id'], $tag['name']);
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
+        }
+    }
+
+
     public function getNbTags()
     {
         try {

@@ -111,7 +111,7 @@ class FrontController
     private function handleApiRequest($uri)
     {
         // Supprimez le préfixe "/api" de l'URI
-        $apiRoute = substr($uri, 4);
+        $apiRoute = substr($uri, 5);
 
         $apiKeyProvided = isset($_SERVER['HTTP_APIKEY']) ? $_SERVER['HTTP_APIKEY'] : null;
 
@@ -121,20 +121,23 @@ class FrontController
             return;
         }
 
-        switch ($apiRoute) {
-            case '/articles':
+        // Séparez l'URI en segments
+        $segments = explode('/', $apiRoute);
+
+        switch ($segments[0]) {
+            case 'articles':
                 $controller = new Controller\Api\ArticleApiController();
                 $controller->handleApiRequest();
                 break;
 
-            case '/categories':
+            case 'categories':
                 $controller = new Controller\Api\CategoryApiController();
                 $controller->handleApiRequest();
                 break;
 
             default:
                 header('HTTP/1.1 404 Not Found');
-                echo json_encode(['error' => 'Route' .  $apiRoute . ' Not Found']);
+                echo json_encode(['error' => 'Route ' . $apiRoute . ' Not Found']);
                 break;
         }
     }
