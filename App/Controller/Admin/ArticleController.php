@@ -45,4 +45,10 @@ class ArticleController
         $pageTitle = 'Création d\'un article';
         include_once './App/Templates/articles/editor.php';
     }
+
+    public function delete($id)
+    {
+        VersionRepository::getInstance()->deleteVersion($id);
+        header('Location: /admin/articles');
+    }
 }

@@ -53,8 +53,10 @@ class AdminController
                     'tags' => TagArticleRepository::getInstance()->getTagsByArticleId($articleId),
                     'createdByUsername' => UserRepository::getInstance()->getUsernameById($articleEntity->getUserId()),
                     'createdAt' => $createdAt->format('d/m/Y'),
-                    'updatedAt' => $updatedAt->format('d/m/Y')
+                    'updatedAt' => $updatedAt->format('d/m/Y'),
+                    'versions' => VersionRepository::getInstance()->getVersionsByArticleId($articleId)
                 ];
+
             }
         }
         include_once './App/Templates/admin/articles/articles.php';

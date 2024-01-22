@@ -174,4 +174,28 @@ class VersionRepository
             return 0;
         }
     }
+
+    public function validateVersion($id)
+    {
+        try {
+            $query = "UPDATE version_article SET isValid = 1 WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+        }
+    }
+
+    public function unvalidateVersion($id)
+    {
+        try {
+            $query = "UPDATE version_article SET isValid = 0 WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+        }
+    }
 }

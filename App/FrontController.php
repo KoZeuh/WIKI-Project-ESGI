@@ -81,6 +81,7 @@ class FrontController
                 // L'URL est découpée en segments, et le nom du contrôleur et de la méthode sont modifiés en fonction de l'action
                 // Exemple : /article/show/1 devient ArticleController->show(1)
                 // Exemple : /article/edit/1 devient Admin\ArticleController->edit(1)
+                // De même pour les articles à valider et à invalider.
                 $segments = explode('/', $uri);
                 if (count($segments) >= 3) {
                     $controllerName = ucfirst($segments[1]) . 'Controller';
@@ -89,9 +90,11 @@ class FrontController
                     // Vérifiez si l'action est "edit" ou "remove"
                     $isEditAction = in_array('edit', $segments);
                     $isRemoveAction = in_array('delete', $segments);
+                    $isValidateAction = in_array('validate', $segments);
+                    $isUnvalidateAction = in_array('unvalidate', $segments);
 
                     // Modifiez le nom du contrôleur en fonction de l'action
-                    if ($isEditAction || $isRemoveAction) {
+                    if ($isEditAction || $isRemoveAction || $isValidateAction || $isUnvalidateAction) {
                         $controllerName = 'Admin\\' . $controllerName;
                     }
 
