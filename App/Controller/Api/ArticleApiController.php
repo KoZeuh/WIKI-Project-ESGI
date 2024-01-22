@@ -16,15 +16,6 @@ class ArticleApiController
             case 'GET':
                 $this->getArticles();
                 break;
-            case 'POST':
-                $this->createArticle();
-                break;
-            case 'PUT':
-                $this->updateArticle();
-                break;
-            case 'DELETE':
-                $this->deleteArticle();
-                break;
             default:
                 echo '405 Method Not Allowed';
         }

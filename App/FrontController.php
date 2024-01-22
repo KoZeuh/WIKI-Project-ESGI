@@ -13,8 +13,7 @@ class FrontController
         session_start();
 
         if (strpos($uri, "/api/") === 0) {
-            $this->handleApiRequest($uri);
-            return;
+            return $this->handleApiRequest($uri);
         }
 
         switch ($uri) {
@@ -121,11 +120,16 @@ class FrontController
             return;
         }
 
-        
+        $routeTab = explode('?', $apiRoute);
 
-        switch ($apiRoute) {
+        switch ($routeTab[0]) {
             case '/articles':
                 $controller = new Controller\Api\ArticleApiController();
+                $controller->handleApiRequest();
+                break;
+
+            case '/categories':
+                $controller = new Controller\Api\CategoryApiController();
                 $controller->handleApiRequest();
                 break;
 
