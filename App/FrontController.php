@@ -103,6 +103,7 @@ class FrontController
                         return call_user_func_array([$controller, $methodName], array_slice($segments, 3));
                     }
                 }
+                header('HTTP/1.1 404 Not Found');
                 echo '404 Not Found';
         }
     }
@@ -120,9 +121,7 @@ class FrontController
             return;
         }
 
-        $routeTab = explode('?', $apiRoute);
-
-        switch ($routeTab[0]) {
+        switch ($apiRoute) {
             case '/articles':
                 $controller = new Controller\Api\ArticleApiController();
                 $controller->handleApiRequest();

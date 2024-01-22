@@ -12,7 +12,7 @@
                     ?>
                     <div class="col-md-6 mt-3 filter-item <?= implode(' ', $tagNames) ?>">
                         <a href="/article/show/<?= $formattedArticle['article']->getId() ?>">
-                            <div class="card">
+                            <div class="card articles" >
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <?php foreach($formattedArticle['tags'] as $tag): ?>
@@ -49,8 +49,7 @@
                 <div class="card-header">Recherche</div>
                 <div class="card-body">
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Catégorie, Titre, ...." aria-label="Catégorie, Titre, .." aria-describedby="button-search" />
-                        <button class="btn btn-primary" id="button-search" type="button">Rechercher</button>
+                        <input id='filterInput' class="form-control filter-input" type="text" placeholder="Catégorie, Titre, ...." aria-label="Catégorie, Titre, .." aria-describedby="button-search" />
                     </div>
                 </div>
             </div>
@@ -96,6 +95,8 @@
     </div>
 </div>
 
+<?php include_once 'App/Templates/default/footer.php'; ?>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('.category-link').on('click', function(event) {
@@ -112,6 +113,31 @@
             });
         });
     });
-</script>
 
-<?php include_once 'App/Templates/default/footer.php'; ?>
+    document.addEventListener('DOMContentLoaded', function () {
+        var filterInput = document.getElementById('filterInput');
+        
+        // Ajout d'un gestionnaire d'événements pour l'événement input
+        filterInput.addEventListener('input', function () {
+            // Filtrer le contenu de la liste en fonction de la saisie dans l'input
+            filterContent();
+        });
+
+        function filterContent() {
+            var filterValue = filterInput.value.toLowerCase(); 
+            var articles = document.getElementsByClassName('articles');
+            for (var i = 0; i < articles.length; i++) {
+                var itemText = articles[i].querySelector('.card-title').textContent.toLowerCase();
+
+                console.log(itemText);
+
+                if (itemText.includes(filterValue)) {
+                    articles[i].style.display = 'block';
+                } else {
+                    articles[i].style.display = 'none';
+                }
+            }
+        }
+    });
+
+</script>
