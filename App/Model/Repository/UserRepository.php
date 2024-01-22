@@ -211,16 +211,37 @@ class UserRepository
 
             $apiKey = $statement->fetch(PDO::FETCH_ASSOC);
 
-            if ($apiKey) {
-                return true;
-            } else {
-                return false;
-            }
-            
-
+            return ($apiKey != null);
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return null;
         }
+    }
+
+    public function regenerateApiKey($user){
+        if (!$user) {
+            return false;
+        }
+
+        $userId = $user->getId();
+
+        if (!$userId) {
+            return false;
+        }
+
+        try {
+            $newApiKey = uniqid('', true);
+            $query = "UPDATE user SET apiKey = :apiKey WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $userId);
+            $statement->bindParam(':apiKey', $newApiKey);
+            $statement->execute();
+
+            return $newApiKey;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+        }
+
+        return false;
     }
 }
