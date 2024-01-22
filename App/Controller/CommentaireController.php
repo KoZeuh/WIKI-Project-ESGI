@@ -13,7 +13,7 @@ class CommentaireController
         $commentaireEntity = CommentRepository::getInstance()->getComment($commentaireId);
 
         if (!$commentaireEntity) {
-            return header('Location: /article/show/' . $commentaireEntity->getArticle_id());
+            return header('Location: /article/show/' . $commentaireEntity->getArticleId());
         }
 
         if (!isset($_SESSION['user'])) {
@@ -21,14 +21,14 @@ class CommentaireController
         }
 
         if ($_SESSION['user']->getRole() !== 'ROLE_ADMIN') {
-            if ($_SESSION['user']->getId() !== $commentaireEntity->getUser_id()) {
-                return header('Location: /article/show/' . $commentaireEntity->getArticle_id());
+            if ($_SESSION['user']->getId() !== $commentaireEntity->getUserId()) {
+                return header('Location: /article/show/' . $commentaireEntity->getArticleId());
             }
         }
 
         CommentRepository::getInstance()->deleteComment($commentaireId);
 
-        header('Location: /article/show/' . $commentaireEntity->getArticle_id());
+        header('Location: /article/show/' . $commentaireEntity->getArticleId());
     }
 }
 

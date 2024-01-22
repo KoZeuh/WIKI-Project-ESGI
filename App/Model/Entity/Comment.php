@@ -2,8 +2,6 @@
 
 namespace App\Model\Entity;
 
-use App\Model\Repository\UserRepository;
-
 class Comment
 {
     private $id;
@@ -12,8 +10,6 @@ class Comment
     private $user_id;
     private $article_id;
 
-    private $username;
-
     public function __construct($id, $content, $createdAt, $user_id, $article_id)
     {
         $this->id = $id;
@@ -21,7 +17,6 @@ class Comment
         $this->createdAt = $createdAt;
         $this->user_id = $user_id;
         $this->article_id = $article_id;
-        $this->username = UserRepository::getInstance()->getUsernameById($user_id);
     }
 
     public function getId()
@@ -39,12 +34,12 @@ class Comment
         return $this->createdAt;
     }
 
-    public function getUser_id()
+    public function getUserId()
     {
         return $this->user_id;
     }
 
-    public function getArticle_id()
+    public function getArticleId()
     {
         return $this->article_id;
     }
