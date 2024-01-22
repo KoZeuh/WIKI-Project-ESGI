@@ -89,8 +89,12 @@ class FrontController
                 $controller->create();
                 break;
             case '/article/create/submit':
-                $controller = new Controller\Admin\ArticleController();
+                $controller = new Controller\ArticleController();
                 $controller->createSubmit();
+                break;
+            case '/article/edit/submit':
+                $controller = new Controller\ArticleController();
+                $controller->editSubmit();
                 break;
             default:
                 // Ce code permet de gérer les redirections quand l'URL contient des paramètres (ex: /article/show/1, /user/show/1, /article/edit/1, /article/delete/1, etc.)

@@ -75,6 +75,27 @@ class TagRepository
         }
     }
 
+    public function getTagByName($name)
+    {
+        try {
+            $query = "SELECT * FROM tag WHERE name = :name";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':name', $name);
+            $statement->execute();
+
+            $tag = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$tag) {
+                return null;
+            }
+
+            return new Tag($tag['id'], $tag['name']);
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
+        }
+    }
+
 
     public function getNbTags()
     {
@@ -117,6 +138,20 @@ class TagRepository
             $statement->bindParam(':name', $tag['name']);
             $statement->execute();
             return true;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function addTag($tag)
+    {
+        try {
+            $query = "INSERT INTO tag (name) VALUES (:name)";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':name', $tag);
+            $statement->execute();
+            return $this->db->lastInsertId();
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return false;

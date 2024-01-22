@@ -68,16 +68,51 @@ class ArticleController
         $tags = $_POST['tags'];
         $content = $_POST['content'];
         $date = date('Y-m-d H:i:s');
-//        $user_id = $_SESSION['user']['id'];
-        $user_id = 1;
+        $user_id = $_SESSION['user']->getId();
 
         $article = [
             'createdAt' => $date,
-            'tags' => $tags,
             'user_id' => $user_id
         ];
 
-        $article_id = ArticleRepository::getInstance()->addArticle($article);
+        $article = ArticleRepository::getInstance()->addArticle($article);
+
+        $version = [
+            'title' => $title,
+            'isValid' => 0,
+            'content' => $content,
+            'updatedAt' => $date,
+            'article_id' => $article->getId(),
+            'user_id' => $user_id
+        ];
+
+        VersionRepository::getInstance()->addVersion($version);
+
+
+        $tags = explode(',', $tags);
+        foreach ($tags as $tag) {
+            $tagName = trim($tag);
+            $tag = tagRepository::getInstance()->getTagByName($tagName);
+            if (!$tag) {
+                $tag_id = TagRepository::getInstance()->addTag($tagName);
+            } else {
+                $tag_id = $tag->getId();
+            }
+            TagArticleRepository::getInstance()->addTagArticle($article->getId(), $tag_id);
+        }
+
+
+        header('Location: /');
+    }
+
+    public function editSubmit()
+    {
+        $title = $_POST['title'];
+        $tags = $_POST['tags'];
+        $content = $_POST['content'];
+        $date = date('Y-m-d H:i:s');
+        $user_id = $_SESSION['user']->getId();
+        $article_id = $_POST['article_id'];
 
         $version = [
             'title' => $title,
@@ -90,6 +125,19 @@ class ArticleController
 
         VersionRepository::getInstance()->addVersion($version);
 
+        TagArticleRepository::getInstance()->deleteAllTagByArticleId($article_id);
+
+        $tags = explode(',', $tags);
+        foreach ($tags as $tag) {
+            $tagName = trim($tag);
+            $tag = tagRepository::getInstance()->getTagByName($tagName);
+            if (!$tag) {
+                $tag_id = TagRepository::getInstance()->addTag($tagName);
+            } else {
+                $tag_id = $tag->getId();
+            }
+            TagArticleRepository::getInstance()->addTagArticle($article_id, $tag_id);
+        }
 
         header('Location: /');
     }

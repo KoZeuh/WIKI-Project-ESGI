@@ -100,10 +100,9 @@ class ArticleRepository
     public function addArticle($article)
     {
         try {
-            $query = "INSERT INTO article (createdAt, tags, user_id) VALUES (:created_at, :tags, :user_id)";
+            $query = "INSERT INTO article (createdAt, user_id) VALUES (:created_at, :user_id)";
             $statement = $this->db->prepare($query);
             $statement->bindParam(':created_at', $article['createdAt']);
-            $statement->bindParam(':tags', $article['tags']);
             $statement->bindParam(':user_id', $article['user_id']);
             $statement->execute();
 

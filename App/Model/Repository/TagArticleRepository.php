@@ -2,10 +2,9 @@
 
 namespace App\Model\Repository;
 
+use App\Database\Database;
 use App\Model\Entity\Article;
 use App\Model\Entity\Tag;
-
-use App\Database\Database;
 use PDO;
 use PDOException;
 
@@ -28,10 +27,14 @@ class TagArticleRepository
     }
 
     // Empêche le clonage de l'objet
-    public function __clone() {}
+    public function __clone()
+    {
+    }
 
     // Empêche la désérialisation de l'objet
-    public function __wakeup() {}
+    public function __wakeup()
+    {
+    }
 
     public function getTagsByArticleId($articleId)
     {
@@ -87,6 +90,31 @@ class TagArticleRepository
             return $articlesObjects;
         } catch (PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+
+    public function addTagArticle($articleId, $tagId)
+    {
+        try {
+            $query = "INSERT INTO tag_article (article_id, tag_id) VALUES (:articleId, :tagId)";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':articleId', $articleId);
+            $statement->bindParam(':tagId', $tagId);
+            $statement->execute();
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+        }
+    }
+
+    public function deleteAllTagByArticleId($articleId)
+    {
+        try {
+            $query = "DELETE FROM tag_article WHERE article_id = :articleId";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':articleId', $articleId);
+            $statement->execute();
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
         }
     }
 }

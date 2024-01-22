@@ -11,6 +11,7 @@ class Comment
     private $createdAt;
     private $user_id;
     private $article_id;
+
     private $username;
 
     public function __construct($id, $content, $createdAt, $user_id, $article_id)
@@ -52,5 +53,5 @@ class Comment
     {
         return $this->username;
     }
-
+    
 }

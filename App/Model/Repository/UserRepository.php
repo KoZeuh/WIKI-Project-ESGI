@@ -207,7 +207,6 @@ class UserRepository
             $statement->execute();
 
             $user = $statement->fetch(PDO::FETCH_ASSOC);
-
             return $user['username'];
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();

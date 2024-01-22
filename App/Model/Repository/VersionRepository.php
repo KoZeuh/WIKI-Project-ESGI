@@ -122,6 +122,7 @@ class VersionRepository
             $statement->bindParam(':article_id', $version['article_id']);
             $statement->bindParam(':user_id', $version['user_id']);
             $statement->execute();
+            return $this->db->lastInsertId();
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
         }
