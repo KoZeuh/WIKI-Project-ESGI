@@ -48,7 +48,7 @@ class ArticleController
 
     public function delete($id)
     {
-        VersionRepository::getInstance()->deleteVersion($id);
+        ArticleRepository::getInstance()->deleteArticle($id);
         header('Location: /admin/articles');
     }
 }

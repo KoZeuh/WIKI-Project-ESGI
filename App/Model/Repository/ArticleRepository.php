@@ -114,6 +114,18 @@ class ArticleRepository
         }
     }
 
+    public function deleteArticle($id)
+    {
+        try {
+            $query = "DELETE FROM article WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+        }
+    }
+
     public function getRandomArticle()
     {
         try {

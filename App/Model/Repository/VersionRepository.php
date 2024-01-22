@@ -198,4 +198,21 @@ class VersionRepository
             echo "Erreur de la base de données : " . $e->getMessage();
         }
     }
+
+    public function getArticleIdByVersionId($id)
+    {
+        try {
+            $query = "SELECT article_id FROM version_article WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+
+            $articleId = $statement->fetch(PDO::FETCH_ASSOC);
+
+            return $articleId['article_id'];
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return 0;
+        }
+    }
 }

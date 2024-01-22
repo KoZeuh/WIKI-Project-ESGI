@@ -36,7 +36,7 @@
                         <a class="nav-link" href="/admin/tags">Liste des tags</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/user">Liste des utilisateurs</a>
+                        <a class="nav-link" href="/admin/users">Liste des utilisateurs</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/comments">Commentaires</a>

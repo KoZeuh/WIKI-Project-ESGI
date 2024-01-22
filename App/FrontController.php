@@ -55,7 +55,7 @@ class FrontController
                 $controller = new Controller\Admin\AdminController();
                 $controller->articles();
                 break;
-            case '/admin/user':
+            case '/admin/users':
                 $controller = new Controller\Admin\AdminController();
                 $controller->users();
                 break;
