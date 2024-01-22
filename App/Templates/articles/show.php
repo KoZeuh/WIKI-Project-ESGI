@@ -63,7 +63,7 @@
                                     </p>
 
                                     <?php if ($comment['createdByUsername'] === $_SESSION['user']->getUsername() || $_SESSION['user']->getRole() === 'ROLE_ADMIN'): ?>
-                                        <a data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#confirmCommentDeleteModal" data-commentaire-id = "<?= $comment['comment']->getId() ?>" class="link-muted"><i class="fas fa-trash ms-2 text-danger"></i></a>
+                                        <a href ="" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#confirmCommentDeleteModal" data-commentaire-id = "<?= $comment['comment']->getId() ?>" class="link-muted"><i class="fas fa-trash ms-2 text-danger"></i></a>
                                     <?php endif; ?>
                                 </div>
 
