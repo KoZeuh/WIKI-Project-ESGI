@@ -82,9 +82,10 @@ class FrontController
                 $controller = new Controller\Admin\UserController();
                 $controller->resetApiKey($_POST['id']);
                 break;
+
 //          Gestion des articles
             case '/article/create':
-                $controller = new Controller\Admin\ArticleController();
+                $controller = new Controller\ArticleController();
                 $controller->create();
                 break;
             case '/article/create/submit':

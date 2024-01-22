@@ -4,6 +4,7 @@ namespace App\Model\Repository;
 
 use App\Database\Database;
 use App\Model\Entity\Comment;
+use DateTime;
 use PDO;
 use PDOException;
 
@@ -118,7 +119,14 @@ class CommentRepository
             $commentsObjects = [];
 
             foreach ($comments as $comment) {
-                $commentsObjects[] = new Comment($comment['id'], $comment['content'], $comment['createdAt'], $comment['user_id'], $comment['article_id']);
+                $createdByUsername = UserRepository::getInstance()->getUsernameById($comment['user_id']);
+                $createdAt = new DateTime($comment['createdAt']);
+
+                $commentsObjects[] = [
+                    'comment' => new Comment($comment['id'], $comment['content'], $comment['createdAt'], $comment['user_id'], $comment['article_id']),
+                    'createdByUsername' => $createdByUsername,
+                    'createdAt' => $createdAt->format('d/m/Y'),
+                ];
             }
 
             return $commentsObjects;
@@ -127,5 +135,4 @@ class CommentRepository
             return [];
         }
     }
-
 }

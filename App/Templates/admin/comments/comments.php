@@ -81,11 +81,11 @@ $pageTitle = "ADMIN | Articles" ?>
         </tr>
         <?php foreach ($article['comments'] as $comment) : ?>
             <tr class="lineVersions hidden <?php echo $article['article']->getId() ?>">
-                <td><?= $comment->getId() ?></td>
-                <td><?= $comment->getUsername() ?> (<?= $comment->getUser_Id() ?>)</td>
-                <td colspan="3"><?= $comment->getContent() ?></td>
+                <td><?= $comment['comment']->getId() ?></td>
+                <td><?= $comment['createdByUsername'] ?> (<?= $comment['comment']->getUser_Id() ?>)</td>
+                <td colspan="3"><?= $comment['comment']->getContent() ?></td>
                 <td>
-                    <a href="/comment/delete/<?= $comment->getId() ?>" class="btn btn-danger">Supprimer</a>
+                    <a href="/comment/delete/<?= $comment['comment']->getId() ?>" class="btn btn-danger">Supprimer</a>
                 </td>
             </tr>
         <?php endforeach; ?>
