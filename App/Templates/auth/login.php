@@ -28,16 +28,16 @@
                         <form method="POST" action="/login">
                             <div class="form-outline">
                                 <input type="text" name="form_login_username" id="form_login_username" class="form-control" required />
-                                <label class="form-label" for="form_login_ysername">Username</label>
+                                <label class="form-label" for="form_login_ysername">Pseudo</label>
                             </div>
 
 
                             <div class="form-outline mb-4 mt-4">
                                 <input type="password" name="form_login_password" id="form_login_password" class="form-control" required/>
-                                <label class="form-label" for="form_login_password">Password</label>
+                                <label class="form-label" for="form_login_password">Mot de passe</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Se connecter</button>
 
                             <?php include_once 'App/Templates/default/error.php'; ?>
                         </form>

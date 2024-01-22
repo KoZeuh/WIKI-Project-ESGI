@@ -45,9 +45,7 @@
                                          height="50px" width="50px" alt="avatar"/>
                                     <div>
                                         <h5 class="card-title font-weight-bold mb-2"><?= $formattedArticle['version']->getTitle() ?></h5>
-                                        <p class="card-text"><i
-                                                    class="far fa-clock pe-2"></i><?= $formattedArticle['createdAt'] ?>
-                                        </p>
+                                        <p class="card-text"><i class="far fa-clock pe-2"></i><?= $formattedArticle['createdAt'] ?></p>
                                     </div>
                                 </div>
                                 <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">

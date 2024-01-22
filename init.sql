@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : lun. 22 jan. 2024 à 13:00
--- Version du serveur : 5.7.24
--- Version de PHP : 8.1.0
+-- Hôte : localhost:8889
+-- Généré le : jeu. 18 jan. 2024 à 19:29
+-- Version du serveur : 5.7.39
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -62,13 +62,7 @@ INSERT INTO `articleoftheday` (`id`, `date`, `article_id`) VALUES
 (22, '2024-01-16', 6),
 (24, '2024-01-17', 4),
 (25, '2024-01-17', 5),
-(26, '2024-01-18', 4),
-(28, '2024-01-19', 4),
-(29, '2024-01-19', 6),
-(30, '2024-01-20', 5),
-(31, '2024-01-20', 6),
-(32, '2024-01-22', 5),
-(33, '2024-01-22', 6);
+(26, '2024-01-18', 4);
 
 -- --------------------------------------------------------
 
@@ -127,18 +121,16 @@ CREATE TABLE `user` (
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(50) DEFAULT 'ROLE_USER',
-  `apiKey` varchar(255) DEFAULT NULL
+  `role` varchar(50) DEFAULT 'ROLE_USER'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `username`, `firstname`, `lastname`, `password`, `role`, `apiKey`) VALUES
-(8, 'a@a.fr', 'kozeuh', 'Kozeuh', 'Dev', '$2y$10$0hkT.oXXqfXhUQSLloTeUOFS5QEMzMgHsgUrx38CQujMMSf2aSHFe', 'ROLE_ADMIN', '65ae2d055ab972.21700851'),
-(9, 'nikolailemerre@gmail.com', 'nikoo', 'Nikolaï', 'LEMERRE', '$2y$10$vZH./rCJdDAxgqYtBkN8A.7EaSeGcVNsrxEvCswQx8H4O83MfSiJ2', 'ROLE_ADMIN', '65ae2d2518f312.31836580'),
-(11, 'antoinebtn@gmail.com', 'antoinebtn', 'Antoine', 'Broutin', '$2y$10$pyIWALDMUX.iJhuXP9mSX.vLD99lJSc06.WreYo2ou.xxfith7Gdq', 'ROLE_USER', '65ae2a0922d880.13696302');
+INSERT INTO `user` (`id`, `email`, `username`, `firstname`, `lastname`, `password`, `role`) VALUES
+(8, 'a@a.fr', 'kozeuh', 'Kozeuh', 'Dev', '$2y$10$0hkT.oXXqfXhUQSLloTeUOFS5QEMzMgHsgUrx38CQujMMSf2aSHFe', 'ROLE_ADMIN'),
+(9, 'nikolailemerre@gmail.com', 'nikoo', 'Nikolaï', 'LEMERRE', '$2y$10$vZH./rCJdDAxgqYtBkN8A.7EaSeGcVNsrxEvCswQx8H4O83MfSiJ2', 'ROLE_ADMIN');
 
 -- --------------------------------------------------------
 
@@ -227,7 +219,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT pour la table `articleoftheday`
 --
 ALTER TABLE `articleoftheday`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT pour la table `tag`
@@ -245,7 +237,7 @@ ALTER TABLE `tag_article`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `version_article`

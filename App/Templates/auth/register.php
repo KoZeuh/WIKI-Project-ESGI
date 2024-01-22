@@ -29,14 +29,14 @@
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
                                         <input type="text" name = "form_register_firstname" id="form_register_firstname" class="form-control" required />
-                                        <label class="form-label" for="form_register_firstname">First name*</label>
+                                        <label class="form-label" for="form_register_firstname">Prénom*</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
                                         <input type="text" name="form_register_lastname" id="form_register_lastname" class="form-control" required />
-                                        <label class="form-label" for="form_register_lastname">Last name*</label>
+                                        <label class="form-label" for="form_register_lastname">Nom*</label>
                                     </div>
                                 </div>
                             </div>
@@ -52,17 +52,17 @@
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
                                         <input type="text" name="form_register_username" id="form_register_username" class="form-control" required />
-                                        <label class="form-label" for="form_register_ysername">Username*</label>
+                                        <label class="form-label" for="form_register_ysername">Pseudo*</label>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-outline mb-4">
                                 <input type="password" name="form_register_password" id="form_register_password" class="form-control" required/>
-                                <label class="form-label" for="form_register_password">Password*</label>
+                                <label class="form-label" for="form_register_password">Mot de passe*</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-4">S'inscrire</button>
 
                             <?php include_once 'App/Templates/default/error.php'; ?>
                         </form>
