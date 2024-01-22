@@ -7,6 +7,7 @@ use App\Model\Repository\TagArticleRepository;
 use App\Model\Repository\TagRepository;
 use App\Model\Repository\UserRepository;
 use App\Model\Repository\VersionRepository;
+use App\Model\Repository\CommentRepository;
 use DateTime;
 
 class ArticleController
@@ -55,7 +56,8 @@ class ArticleController
             'lastVersion' => VersionRepository::getInstance()->getLastVersionByArticleId($articleId),
             'versions' => VersionRepository::getInstance()->getVersionsByArticleId($articleId),
             'tags' => TagArticleRepository::getInstance()->getTagsByArticleId($articleId),
-            'createdByUsername' => UserRepository::getInstance()->getUsernameById($articleEntity->getUserId())
+            'createdByUsername' => UserRepository::getInstance()->getUsernameById($articleEntity->getUserId()),
+            'comments' => CommentRepository::getInstance()->getCommentsByArticleId($articleId)
         ];
 
         $pageTitle = 'Détails d\'un article';
