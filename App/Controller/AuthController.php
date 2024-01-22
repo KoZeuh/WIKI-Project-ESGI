@@ -18,6 +18,7 @@ class AuthController
                 $firstname = htmlspecialchars($_POST['form_register_firstname']);
                 $lastname = htmlspecialchars($_POST['form_register_lastname']);
                 $password = $_POST['form_register_password'];
+                $apiKey = uniqid('', true);
     
                 $userModel = UserRepository::getInstance();
                 $userEntity = $userModel->getUserByUsername($username);
@@ -25,7 +26,7 @@ class AuthController
                 if ($userEntity) {
                     $errorsAlert[] = 'Ce nom d\'utilisateur est déjà utilisé !';
                 } else {
-                    $userEntity = $userModel->registerUser($email, $username, $firstname, $lastname, $password);
+                    $userEntity = $userModel->registerUser($email, $username, $firstname, $lastname, $password, $apiKey);
         
                     if ($userEntity) {
                         $_SESSION['user'] = $userEntity;

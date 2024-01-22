@@ -11,8 +11,9 @@ class User
     private $lastname;
     private $password;
     private $role;
+    private $apiKey;
 
-    public function __construct($id, $email, $username, $firstname, $lastname, $password, $role = null)
+    public function __construct($id, $email, $username, $firstname, $lastname, $password, $role = null, $apiKey = null)
     {
         $this->id = $id;
         $this->email = $email;
@@ -20,6 +21,7 @@ class User
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->password = $password;
+        $this->apiKey = $apiKey;
         
         if (empty($role)) {
             $this->role = 'ROLE_USER';
@@ -138,6 +140,21 @@ class User
     public function setRole($role)
     {
         $this->role = $role;
+    }
+
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+    }
+
+    public function generateApiKey()
+    {
+        $this->setApiKey(uniqid('', true));
+    }
+
+    public function getApiKey()
+    {
+        return $this->apiKey;
     }
 
 }

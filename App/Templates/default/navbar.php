@@ -28,6 +28,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/article/list">Liste des articles</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compte">Mon Compte</a>
+                </li>
             <?php endif; ?>
         </ul>
 

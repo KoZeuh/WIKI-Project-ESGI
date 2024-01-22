@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Model\Repository\UserRepository;
+
 class FrontController
 {
     public function run()
@@ -9,6 +11,11 @@ class FrontController
         $uri = $_SERVER['REQUEST_URI'];
 
         session_start();
+
+        if (strpos($uri, "/api/") === 0) {
+            $this->handleApiRequest($uri);
+            return;
+        }
 
         switch ($uri) {
             case '/':
@@ -34,6 +41,10 @@ class FrontController
             case '/article/list':
                 $controller = new Controller\ArticleController();
                 $controller->list();
+                break;
+            case '/compte':
+                $controller = new Controller\AccountController();
+                $controller->index();
                 break;
 //          Switch pour l'admin
 //          Affichage des différentes catégories
@@ -93,9 +104,37 @@ class FrontController
                         return call_user_func_array([$controller, $methodName], array_slice($segments, 3));
                     }
                 }
-
-
                 echo '404 Not Found';
         }
     }
+
+    private function handleApiRequest($uri)
+    {
+        // Supprimez le préfixe "/api" de l'URI
+        $apiRoute = substr($uri, 4);
+
+        $apiKeyProvided = isset($_SERVER['HTTP_APIKEY']) ? $_SERVER['HTTP_APIKEY'] : null;
+
+        if (!UserRepository::getInstance()->isValidApiKey($apiKeyProvided)) {
+            header('HTTP/1.1 401 Unauthorized');
+            echo json_encode(['error' => 'Invalid API key']);
+            return;
+        }
+
+        
+
+        switch ($apiRoute) {
+            case '/articles':
+                $controller = new Controller\Api\ArticleApiController();
+                $controller->handleApiRequest();
+                break;
+
+            default:
+                header('HTTP/1.1 404 Not Found');
+                echo json_encode(['error' => 'Route' .  $apiRoute . ' Not Found']);
+                break;
+        }
+    }
+
 }
+

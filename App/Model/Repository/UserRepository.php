@@ -35,18 +35,19 @@ class UserRepository
     {
     }
 
-    public function registerUser($email, $username, $firstname, $lastname, $password)
+    public function registerUser($email, $username, $firstname, $lastname, $password, $apiKey)
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         try {
-            $query = "INSERT INTO user (email, username, firstname, lastname, password) VALUES (:email, :username, :firstname, :lastname, :password)";
+            $query = "INSERT INTO user (email, username, firstname, lastname, password, apiKey) VALUES (:email, :username, :firstname, :lastname, :password, :apiKey)";
             $statement = $this->db->prepare($query);
             $statement->bindParam(':email', $email);
             $statement->bindParam(':username', $username);
             $statement->bindParam(':firstname', $firstname);
             $statement->bindParam(':lastname', $lastname);
             $statement->bindParam(':password', $hashedPassword);
+            $statement->bindParam(':apiKey', $apiKey);
             $statement->execute();
 
             return $this->getUserByUsername($username);
@@ -77,7 +78,8 @@ class UserRepository
                 $user['firstname'],
                 $user['lastname'],
                 $user['password'],
-                $user['role']
+                $user['role'],
+                $user['apiKey']
             );
 
             return $userEntity;
@@ -196,6 +198,29 @@ class UserRepository
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
             return [];
+        }
+    }
+
+    public function isValidApiKey($apiKeyProvided)
+    {
+        try {
+            $query = "SELECT apiKey FROM user WHERE apiKey = :apiKey";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':apiKey', $apiKeyProvided);
+            $statement->execute();
+
+            $apiKey = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($apiKey) {
+                return true;
+            } else {
+                return false;
+            }
+            
+
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return null;
         }
     }
 }
