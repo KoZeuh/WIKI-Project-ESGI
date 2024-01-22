@@ -35,7 +35,12 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
-    <script>
-        document.getElementById('confirmLogoutBtn').addEventListener('click', function () {window.location.href = '/logout'});
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#confirmLogoutBtn').on('click', function() {
+                window.location.href = '/logout';
+            });
+        });
     </script>
 </html>

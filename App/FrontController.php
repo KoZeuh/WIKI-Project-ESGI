@@ -13,7 +13,8 @@ class FrontController
         session_start();
 
         if (strpos($uri, "/api/") === 0) {
-            return $this->handleApiRequest($uri);
+            $this->handleApiRequest($uri);
+            return;
         }
 
         switch ($uri) {
@@ -45,6 +46,19 @@ class FrontController
                 $controller = new Controller\AccountController();
                 $controller->index();
                 break;
+            case '/compte/regenerate-api-key':
+                $controller = new Controller\AccountController();
+                $controller->regenerateApiKey();
+                break;
+            case '/compte/change-password':
+                // TODO : Change password
+                // Premier champ : form_old_password (mot de passe actuel)
+                // Deuxième champ : form_first_new_password (nouveau mot de passe)
+                // Troisième champ : form_second_new_password (confirmation du nouveau mot de passe)
+                break;
+
+
+
 //          Switch pour l'admin
 //          Affichage des différentes catégories
             case '/admin':
@@ -81,7 +95,6 @@ class FrontController
                 // L'URL est découpée en segments, et le nom du contrôleur et de la méthode sont modifiés en fonction de l'action
                 // Exemple : /article/show/1 devient ArticleController->show(1)
                 // Exemple : /article/edit/1 devient Admin\ArticleController->edit(1)
-                // De même pour les articles à valider et à invalider.
                 $segments = explode('/', $uri);
                 if (count($segments) >= 3) {
                     $controllerName = ucfirst($segments[1]) . 'Controller';
@@ -90,11 +103,9 @@ class FrontController
                     // Vérifiez si l'action est "edit" ou "remove"
                     $isEditAction = in_array('edit', $segments);
                     $isRemoveAction = in_array('delete', $segments);
-                    $isValidateAction = in_array('validate', $segments);
-                    $isUnvalidateAction = in_array('unvalidate', $segments);
 
                     // Modifiez le nom du contrôleur en fonction de l'action
-                    if ($isEditAction || $isRemoveAction || $isValidateAction || $isUnvalidateAction) {
+                    if ($isEditAction || $isRemoveAction) {
                         $controllerName = 'Admin\\' . $controllerName;
                     }
 
@@ -106,7 +117,6 @@ class FrontController
                         return call_user_func_array([$controller, $methodName], array_slice($segments, 3));
                     }
                 }
-                header('HTTP/1.1 404 Not Found');
                 echo '404 Not Found';
         }
     }
@@ -114,7 +124,7 @@ class FrontController
     private function handleApiRequest($uri)
     {
         // Supprimez le préfixe "/api" de l'URI
-        $apiRoute = substr($uri, 4);
+        $apiRoute = substr($uri, 5);
 
         $apiKeyProvided = isset($_SERVER['HTTP_APIKEY']) ? $_SERVER['HTTP_APIKEY'] : null;
 
@@ -124,20 +134,23 @@ class FrontController
             return;
         }
 
-        switch ($apiRoute) {
-            case '/articles':
+        // Séparez l'URI en segments
+        $segments = explode('/', $apiRoute);
+
+        switch ($segments[0]) {
+            case 'articles':
                 $controller = new Controller\Api\ArticleApiController();
                 $controller->handleApiRequest();
                 break;
 
-            case '/categories':
+            case 'categories':
                 $controller = new Controller\Api\CategoryApiController();
                 $controller->handleApiRequest();
                 break;
 
             default:
                 header('HTTP/1.1 404 Not Found');
-                echo json_encode(['error' => 'Route' . $apiRoute . ' Not Found']);
+                echo json_encode(['error' => 'Route ' . $apiRoute . ' Not Found']);
                 break;
         }
     }
