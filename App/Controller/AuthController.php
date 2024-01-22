@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Model\Entity\User;
 use App\Model\Repository\UserRepository;
 
+use App\Service\PasswordValidator;
+
 class AuthController
 {
     public function register()
@@ -13,30 +15,37 @@ class AuthController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['form_register_email'], $_POST['form_register_username'], $_POST['form_register_firstname'], $_POST['form_register_lastname'], $_POST['form_register_password'])) {
-                $email = filter_var($_POST['form_register_email'], FILTER_VALIDATE_EMAIL);
-                $username = htmlspecialchars($_POST['form_register_username']);
-                $firstname = htmlspecialchars($_POST['form_register_firstname']);
-                $lastname = htmlspecialchars($_POST['form_register_lastname']);
                 $password = $_POST['form_register_password'];
-                $apiKey = uniqid('', true);
-    
-                $userModel = UserRepository::getInstance();
-                $userEntity = $userModel->getUserByUsername($username);
 
-                if ($userEntity) {
-                    $errorsAlert[] = 'Ce nom d\'utilisateur est déjà utilisé !';
+                if (!PasswordValidator::getInstance()->validate($password)) {
+                    $errorsAlert[] = 'Le mot de passe doit contenir : au moins 12 caractères, 1 majuscule, 1 minuscule et 1 caractère spécial';
                 } else {
-                    $userEntity = $userModel->registerUser($email, $username, $firstname, $lastname, $password, $apiKey);
+                    $email = filter_var($_POST['form_register_email'], FILTER_VALIDATE_EMAIL);
+                    $username = htmlspecialchars($_POST['form_register_username']);
+                    $firstname = htmlspecialchars($_POST['form_register_firstname']);
+                    $lastname = htmlspecialchars($_POST['form_register_lastname']);
+                    $apiKey = uniqid('', true);
         
+                    $userModel = UserRepository::getInstance();
+                    $userEntity = $userModel->getUserByUsername($username);
+
                     if ($userEntity) {
-                        $_SESSION['user'] = $userEntity;
-                        
-                        header('Location: /');
-                        exit();
+                        $errorsAlert[] = 'Ce nom d\'utilisateur est déjà utilisé !';
                     } else {
-                        $errorsAlert[] = 'Une erreur est survenue';
+                        $userEntity = $userModel->registerUser($email, $username, $firstname, $lastname, $password, $apiKey);
+            
+                        if ($userEntity) {
+                            $_SESSION['user'] = $userEntity;
+                            
+                            header('Location: /');
+                            exit();
+                        } else {
+                            $errorsAlert[] = 'Une erreur est survenue';
+                        }
                     }
                 }
+                
+                
             } else {
                 $errorsAlert[] = 'Veuillez remplir tous les champs';
             }

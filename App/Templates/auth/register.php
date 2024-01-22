@@ -60,6 +60,7 @@
                             <div class="form-outline mb-4">
                                 <input type="password" name="form_register_password" id="form_register_password" class="form-control" required/>
                                 <label class="form-label" for="form_register_password">Mot de passe*</label>
+                                <p class="form-text"><small>Le mot de passe doit contenir : au moins 12 caractères, 1 majuscule, 1 minuscule et 1 caractère spécial</small></p>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block mb-4">S'inscrire</button>
