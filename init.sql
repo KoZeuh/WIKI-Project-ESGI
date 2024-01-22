@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : lun. 22 jan. 2024 à 21:06
--- Version du serveur : 5.7.39
--- Version de PHP : 8.2.0
+-- Hôte : 127.0.0.1:3306
+-- Généré le : lun. 22 jan. 2024 à 21:57
+-- Version du serveur : 8.2.0
+-- Version de PHP : 8.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,11 +27,14 @@ SET time_zone = "+00:00";
 -- Structure de la table `article`
 --
 
-CREATE TABLE `article` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE IF NOT EXISTS `article` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `article`
@@ -49,11 +52,14 @@ INSERT INTO `article` (`id`, `createdAt`, `user_id`) VALUES
 -- Structure de la table `articleoftheday`
 --
 
-CREATE TABLE `articleoftheday` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `articleoftheday`;
+CREATE TABLE IF NOT EXISTS `articleoftheday` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
-  `article_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `article_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_article` (`article_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `articleoftheday`
@@ -73,20 +79,24 @@ INSERT INTO `articleoftheday` (`id`, `date`, `article_id`) VALUES
 -- Structure de la table `comment`
 --
 
-CREATE TABLE `comment` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `article_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `article_id` int NOT NULL,
   `content` varchar(255) NOT NULL,
-  `createdAt` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `comment_ibfk_1` (`user_id`),
+  KEY `comment_ibfk_2` (`article_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `comment`
 --
 
 INSERT INTO `comment` (`id`, `user_id`, `article_id`, `content`, `createdAt`) VALUES
-(9, 8, 4, 'azadzadazdazd', '2024-01-22 19:57:30');
+(11, 11, 4, 'trop bien !', '2024-01-22 22:50:25');
 
 -- --------------------------------------------------------
 
@@ -94,17 +104,19 @@ INSERT INTO `comment` (`id`, `user_id`, `article_id`, `content`, `createdAt`) VA
 -- Structure de la table `tag`
 --
 
-CREATE TABLE `tag` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE IF NOT EXISTS `tag` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `tag`
 --
 
 INSERT INTO `tag` (`id`, `name`) VALUES
-(1, 'Linuxe'),
+(1, 'Linux'),
 (2, 'Windows'),
 (3, 'Symfony'),
 (4, 'Laravel'),
@@ -117,11 +129,15 @@ INSERT INTO `tag` (`id`, `name`) VALUES
 -- Structure de la table `tag_article`
 --
 
-CREATE TABLE `tag_article` (
-  `id` int(11) NOT NULL,
-  `tag_id` int(11) NOT NULL,
-  `article_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `tag_article`;
+CREATE TABLE IF NOT EXISTS `tag_article` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tag_id` int NOT NULL,
+  `article_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tag_id` (`tag_id`,`article_id`),
+  KEY `article_id` (`article_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `tag_article`
@@ -139,16 +155,18 @@ INSERT INTO `tag_article` (`id`, `tag_id`, `article_id`) VALUES
 -- Structure de la table `user`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `role` varchar(50) DEFAULT 'ROLE_USER',
-  `apiKey` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `apiKey` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `user`
@@ -164,15 +182,19 @@ INSERT INTO `user` (`id`, `email`, `username`, `firstname`, `lastname`, `passwor
 -- Structure de la table `version_article`
 --
 
-CREATE TABLE `version_article` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `isValid` tinyint(1) DEFAULT NULL,
-  `content` text,
+DROP TABLE IF EXISTS `version_article`;
+CREATE TABLE IF NOT EXISTS `version_article` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `isValid` tinyint(1) NOT NULL DEFAULT '0',
+  `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `article_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `article_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `article_id` (`article_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `version_article`
@@ -189,106 +211,6 @@ INSERT INTO `version_article` (`id`, `title`, `isValid`, `content`, `updatedAt`,
 (16, 'Présentation de la version 1.0 de JQuery !', 0, '<h1>Pr&eacute;sentation v1</h1>\r\n<p>Coucou alors c\'est juste un paragraphe de test !</p>\r\n<h2 class=\"text-center\">Ce titre est centr&eacute; et ceci est un test</h2>', '2024-01-22 20:00:15', NULL, 11),
 (17, 'Présentation de la version 1.0 de JQuery !', 0, '<h1>Pr&eacute;sentation v1</h1>\r\n<p>Coucou alors c\'est juste un paragraphe de test !</p>\r\n<h2 class=\"text-center\">Ce titre est centr&eacute; et ceci est un test (oui)</h2>', '2024-01-22 20:02:02', 4, 11),
 (18, 'Présentation de la version 1.0 de JQuery !', 0, '<h1>Pr&eacute;sentation v1</h1>\r\n<p>Coucou alors c\'est juste un paragraphe de test !</p>\r\n<h2 class=\"text-center\">Ce titre est centr&eacute; et ceci est un test (oui)</h2>\r\n<p>et encore une hehehe</p>', '2024-01-22 20:05:27', 4, 11);
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `article`
---
-ALTER TABLE `article`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Index pour la table `articleoftheday`
---
-ALTER TABLE `articleoftheday`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_article` (`article_id`);
-
---
--- Index pour la table `comment`
---
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `comment_ibfk_1` (`user_id`),
-  ADD KEY `comment_ibfk_2` (`article_id`);
-
---
--- Index pour la table `tag`
---
-ALTER TABLE `tag`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `tag_article`
---
-ALTER TABLE `tag_article`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tag_id` (`tag_id`,`article_id`),
-  ADD KEY `article_id` (`article_id`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `version_article`
---
-ALTER TABLE `version_article`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `article_id` (`article_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `article`
---
-ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT pour la table `articleoftheday`
---
-ALTER TABLE `articleoftheday`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT pour la table `comment`
---
-ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT pour la table `tag`
---
-ALTER TABLE `tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT pour la table `tag_article`
---
-ALTER TABLE `tag_article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT pour la table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT pour la table `version_article`
---
-ALTER TABLE `version_article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Contraintes pour les tables déchargées
