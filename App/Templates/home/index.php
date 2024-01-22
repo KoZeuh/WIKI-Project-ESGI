@@ -1,23 +1,24 @@
 <?php include_once 'App/Templates/default/navbar.php'; ?>
 
-    <div class="row justify-content-center mx-2 mt-3">
-        <?php foreach ($formattedArticlesOfTheDay as $formattedArticle): ?>
-            <div class="col-6">
-                <a href="/article/show/<?= $formattedArticle['article']->getId() ?>">
-                    <div class="image-container">
-                        <img class="img-fluid"
-                             src="https://preview.colorlib.com/theme/philosophy/images/thumbs/featured/featured-guitarman.jpg"
-                             style="width: 100%;" alt="Image">
+<div class="row justify-content-center mx-2 mt-3">
+    <?php foreach ($formattedArticlesOfTheDay as $formattedArticle): ?>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <a href="/article/show/<?= $formattedArticle['article']->getId() ?>">
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://preview.colorlib.com/theme/philosophy/images/thumbs/featured/featured-guitarman.jpg"
+                         alt="Image">
 
-                        <?php if ($formattedArticle['tags']): ?>
-                            <div class="category-background">
-                                <?php foreach ($formattedArticle['tags'] as $tag): ?>
-                                    <span class="category"><?= $tag->getName() ?>, </span>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+                    <?php if ($formattedArticle['tags']): ?>
+                        <div class="category-background">
+                            <?php foreach ($formattedArticle['tags'] as $tag): ?>
+                                <span class="category"><?= $tag->getName() ?>, </span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
 
-                        <h3 class="image-title"><?= $formattedArticle['version']->getTitle() ?></h3>
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $formattedArticle['version']->getTitle() ?></h5>
                         <div class="user-info">
                             <img class="avatar"
                                  src="https://preview.colorlib.com/theme/philosophy/images/avatars/user-03.jpg"
@@ -26,15 +27,17 @@
                             <span class="publication-date"><?= $formattedArticle['createdAt'] ?></span>
                         </div>
                     </div>
-                </a>
-            </div>
-        <?php endforeach; ?>
-    </div>
+                </div>
+            </a>
+        </div>
+    <?php endforeach; ?>
+</div>
+
 
     <div class="container">
         <section class="mx-auto my-5">
             <h2 class="text-center">Quelques articles du mois</h2>
-            <div class="row row-cols-3 g-4">
+            <div class="row">
                 <?php foreach ($formattedArticlesOfTheMonth as $formattedArticle): ?>
                     <div class="col-md-4">
                         <a href="/article/show/<?= $formattedArticle['article']->getId() ?>">
