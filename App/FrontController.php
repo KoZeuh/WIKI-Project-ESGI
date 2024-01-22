@@ -18,11 +18,8 @@ class FrontController
         }
 
         switch ($uri) {
-            case '/':
-                $controller = new Controller\HomeController();
-                $controller->index();
-                break;
             case "/index":
+            case '/':
                 $controller = new Controller\HomeController();
                 $controller->index();
                 break;
@@ -80,6 +77,10 @@ class FrontController
             case '/admin/comments':
                 $controller = new Controller\Admin\AdminController();
                 $controller->comments();
+                break;
+            case '/admin/user/resetApiKey':
+                $controller = new Controller\Admin\UserController();
+                $controller->resetApiKey($_POST['id']);
                 break;
 //          Gestion des articles
             case '/article/create':

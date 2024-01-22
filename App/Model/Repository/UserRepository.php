@@ -89,6 +89,38 @@ class UserRepository
         }
     }
 
+    public function getUserById($id)
+    {
+        try {
+            $query = "SELECT * FROM user WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+
+            $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$user) {
+                return null;
+            }
+
+            $userEntity = new User(
+                $user['id'],
+                $user['email'],
+                $user['username'],
+                $user['firstname'],
+                $user['lastname'],
+                $user['password'],
+                $user['role'],
+                $user['apiKey']
+            );
+
+            return $userEntity;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return null;
+        }
+    }
+
     public function editUser($user)
     {
         try {
@@ -218,7 +250,8 @@ class UserRepository
         }
     }
 
-    public function regenerateApiKey($user){
+    public function regenerateApiKey($user)
+    {
         if (!$user) {
             return false;
         }

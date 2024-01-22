@@ -36,7 +36,7 @@ class UserController
 
         $user = UserRepository::getInstance()->editUser($user);
         if ($user) {
-            header('Location: /admin/user');
+            header('Location: /admin/users');
         } else {
             echo 'Erreur lors de la modification de l\'utilisateur';
             echo '<a href="/admin/user">Retour</a>';
@@ -47,9 +47,21 @@ class UserController
     {
         $user = UserRepository::getInstance()->deleteUser($id);
         if ($user) {
-            header('Location: /admin/user');
+            header('Location: /admin/users');
         } else {
             echo 'Erreur lors de la suppression de l\'utilisateur';
+            echo '<a href="/admin/user">Retour</a>';
+        }
+    }
+
+    public function resetApiKey($id)
+    {
+        $userOBJ = UserRepository::getInstance()->getUserById($id);
+        $user = UserRepository::getInstance()->regenerateApiKey($userOBJ);
+        if ($user) {
+            header('Location: /admin/users');
+        } else {
+            echo 'Erreur lors de la réinitialisation de la clé API';
             echo '<a href="/admin/user">Retour</a>';
         }
     }

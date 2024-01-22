@@ -26,6 +26,7 @@ $pageTitle = "ADMIN | Utilisateurs" ?>
         <th scope="col">Lastname</th>
         <th scope="col">Role</th>
         <th scope="col">Actions</th>
+        <th scope="col">API</th>
     </tr>
     </thead>
     <tbody>
@@ -53,6 +54,21 @@ $pageTitle = "ADMIN | Utilisateurs" ?>
                        class="btn btn-danger">Supprimer</a>
                 </td>
             </form>
+            <td>
+                <form method="post" action="/admin/user/resetApiKey">
+                    <button type="button" class="btn btn-info" onclick="openModal(<?= $user->getId() ?>)">Régénérer
+                        l'API Key
+                    </button>
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <p>Êtes-vous sûr de vouloir régénérer la clé API de cet utilisateur ?</p>
+                            <input type="hidden" name="id" value="<?= $user->getId() ?>">
+                            <button type="submit" class="btn btn-info">Oui</button>
+                            <button type="button" class="btn btn-danger" onclick="closeModal()">Non</button>
+                        </div>
+                    </div>
+                </form>
+            </td>
         </tr>
     <?php endforeach; ?>
     </tbody>
