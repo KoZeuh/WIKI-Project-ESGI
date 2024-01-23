@@ -30,5 +30,15 @@ class CommentaireController
 
         header('Location: /article/show/' . $commentaireEntity->getArticleId());
     }
+
+    public function addComment($articleId)
+    {
+        $userId = $_SESSION['user']->getId();
+        $content = $_POST['addComment'];
+
+        CommentRepository::getInstance()->addComment($content, $userId, $articleId);
+
+        header('Location: /article/show/' . $articleId);
+    }
 }
 
