@@ -26,6 +26,10 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
+
+                    <br>
+
+                    <button class="btn btn-primary" onclick="window.location.href='/article/edit/<?= $formattedArticle['article']->getId() ?>'">Modifier</button>
                 </header>
 
                 <hr>
