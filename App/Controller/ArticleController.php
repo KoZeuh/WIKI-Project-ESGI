@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Model\Repository\ArticleRepository;
+use App\Model\Repository\CommentRepository;
 use App\Model\Repository\TagArticleRepository;
 use App\Model\Repository\TagRepository;
 use App\Model\Repository\UserRepository;
 use App\Model\Repository\VersionRepository;
-use App\Model\Repository\CommentRepository;
 use DateTime;
 
 class ArticleController

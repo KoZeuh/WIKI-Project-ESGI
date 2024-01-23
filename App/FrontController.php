@@ -107,9 +107,11 @@ class FrontController
                     // Vérifiez si l'action est "edit" ou "remove"
                     $isEditAction = in_array('edit', $segments);
                     $isRemoveAction = in_array('delete', $segments);
+                    $isValidate = in_array('validate', $segments);
+                    $isUnvalidate = in_array('unvalidate', $segments);
 
                     // Modifiez le nom du contrôleur en fonction de l'action
-                    if ($isEditAction || $isRemoveAction) {
+                    if ($isEditAction || $isRemoveAction || $isValidate || $isUnvalidate) {
                         $controllerName = 'Admin\\' . $controllerName;
                     }
 

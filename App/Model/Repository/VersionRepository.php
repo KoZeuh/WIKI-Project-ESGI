@@ -77,7 +77,7 @@ class VersionRepository
     public function getLastVersionByArticleId($id)
     {
         try {
-            $query = "SELECT * FROM version_article WHERE article_id = :id ORDER BY updatedAt DESC LIMIT 1";
+            $query = "SELECT * FROM version_article WHERE article_id = :id and isValid = 1 ORDER BY updatedAt DESC LIMIT 1";
             $statement = $this->db->prepare($query);
             $statement->bindParam(':id', $id);
             $statement->execute();
