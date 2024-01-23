@@ -184,7 +184,7 @@
                 <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal" aria-label="Annuler"></button>
             </div>
 
-            <form method="POST" action="/compte/change-password">
+            <form method="POST" action="/compte/change-password" id='changePasswordForm'>
                 <div class="modal-body">
                     <div class="form-outline mb-4 mt-4">
                         <input type="password" name="form_old_password" id="form_old_password" class="form-control" required/>
@@ -213,9 +213,37 @@
 <?php include_once 'App/Templates/default/footer.php'; ?>
 
 <script type="text/javascript">
+    // generation clé api 
     $(document).ready(function() {
         $('#confirmRegenApiKeyBtn').on('click', function() {
             window.location.href = '/compte/regenerate-api-key';
+        });
+    });
+
+    // modification du mot de passe 
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('changePasswordForm');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var formData = new FormData(form);
+            fetch('/compte/change-password', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    console.log('Opération réussie');
+                    window.location.href = '/compte';
+                } else {
+                    console.log('Erreur côté serveur :', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la soumission du formulaire :', error);
+            });
         });
     });
 </script>

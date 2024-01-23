@@ -24,5 +24,18 @@ class AccountController
 
         return header('Location: /compte');
     }
+    
+    public function changePassword()
+    {
+        $result = UserRepository::getInstance()->changePassword($_SESSION['user']);
+        if ($result) {
+            header('Content-Type: application/json');
+            echo json_encode(['message' => 'Mot de passe modifié avec succès']);
+        } else {
+            header('Content-Type: application/json');
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(['error' => 'An error occurs during your password modification ']);
+        }
+    }
 }
 

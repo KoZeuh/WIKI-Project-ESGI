@@ -276,4 +276,40 @@ class UserRepository
 
         return false;
     }
+
+    
+    public function changePassword($user)
+    {
+        $oldPassword = $_POST['form_old_password'];
+        $newPassword = $_POST['form_first_new_password'];
+        $newPasswordConfirmation = $_POST['form_second_new_password'];
+        $userId = $user->getId();
+        $username = $user->getUsername();
+
+        $newPasswordHashed = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $userModel = UserRepository::getInstance();
+        $userEntity = $userModel->getUserByUsernameAndPassword($username, $oldPassword);
+        if ($userEntity) {
+            $_SESSION['user'] = $userEntity;
+        } else {
+            return false;
+        }
+
+        if ($newPassword !== $newPasswordConfirmation || !$userId) {
+            return false;
+        }
+
+        try {
+            $query = "UPDATE user SET password = :password WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':id', $userId);
+            $statement->bindParam(':password', $newPasswordHashed);
+            $statement->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur de la base de données : " . $e->getMessage();
+        }
+    }
 }

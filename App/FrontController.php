@@ -48,10 +48,8 @@ class FrontController
                 $controller->regenerateApiKey();
                 break;
             case '/compte/change-password':
-                // TODO : Change password
-                // Premier champ : form_old_password (mot de passe actuel)
-                // Deuxième champ : form_first_new_password (nouveau mot de passe)
-                // Troisième champ : form_second_new_password (confirmation du nouveau mot de passe)
+                $controller = new Controller\AccountController();
+                $controller->changePassword();
                 break;
 
 
