@@ -5,7 +5,17 @@
 <div class="container-fluid mt-5">
     <div class="row">
         <div class="col-md-8">
+            <?php include_once 'App/Templates/default/error.php'; ?>
+
             <div class="row">
+                <?php if (count($formattedArticles) === 0): ?>
+                    <div class="col-md-12 mt-3 text-center">
+                        <div class="alert alert-warning" role="alert">
+                            Aucun article trouvé
+                        </div>
+                    </div>
+                <?php endif; ?>
+                
                 <?php foreach($formattedArticles as $formattedArticle): ?>
                     <?php
                         $tagNames = array_map(function ($tag) {return $tag->getName();}, $formattedArticle['tags']);

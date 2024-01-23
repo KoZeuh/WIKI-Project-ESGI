@@ -22,8 +22,7 @@ class ArticleController
             $articleId = $articleEntity->getId();
             $articleLastValidVersionEntity = VersionRepository::getInstance()->getLastVersionByArticleId($articleId);
 
-
-            if ($articleLastValidVersionEntity) {
+            if ($articleLastValidVersionEntity && $articleLastValidVersionEntity->getIsValid()) {
                 $createdAt = new DateTime($articleEntity->getCreatedAt());
                 $updatedAt = new DateTime($articleLastValidVersionEntity->getUpdatedAt());
 
@@ -47,13 +46,18 @@ class ArticleController
         $articleEntity = ArticleRepository::getInstance()->getArticleById($articleId);
 
         if (!$articleEntity) {
-            header('Location: /article/list');
-            return;
+            return header('Location: /article/list');
+        }
+
+        $lastVersionEntity = VersionRepository::getInstance()->getLastVersionByArticleId($articleId);
+
+        if (!$lastVersionEntity || !$lastVersionEntity->getIsValid()) {
+            return header('Location: /article/list');
         }
 
         $formattedArticle = [
             'article' => $articleEntity,
-            'lastVersion' => VersionRepository::getInstance()->getLastVersionByArticleId($articleId),
+            'lastVersion' => $lastVersionEntity,
             'versions' => VersionRepository::getInstance()->getVersionsByArticleId($articleId),
             'tags' => TagArticleRepository::getInstance()->getTagsByArticleId($articleId),
             'createdByUsername' => UserRepository::getInstance()->getUsernameById($articleEntity->getUserId()),
