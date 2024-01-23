@@ -54,6 +54,11 @@ class HomeController
             $articleId = $articleEntity->getId();
 
             $articleLastValidVersionEntity = VersionRepository::getInstance()->getLastVersionByArticleId($articleId);
+
+            if (!$articleLastValidVersionEntity || !$articleLastValidVersionEntity->getIsValid()) {
+                continue;
+            }
+            
             $tagsEntity = TagArticleRepository::getInstance()->getTagsByArticleId($articleId);
 
             $createdAt = new DateTime($articleEntity->getCreatedAt());

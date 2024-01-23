@@ -185,7 +185,7 @@
             </div>
 
             <form method="POST" action="/compte/change-password" id='changePasswordForm'>
-                <div class="modal-body">
+                <div class="modal-body" id="modal-body-change-password">
                     <div class="form-outline mb-4 mt-4">
                         <input type="password" name="form_old_password" id="form_old_password" class="form-control" required/>
                         <label class="form-label" for="form_old_password">Ancien mot de passe</label>
@@ -238,7 +238,7 @@
                     console.log('Opération réussie');
                     window.location.href = '/compte';
                 } else {
-                    console.log('Erreur côté serveur :', data.error);
+                    $('#modal-body-change-password').prepend('<div class="alert alert-danger text-center" role="alert">Votre ancien mot de passe ne correspond pas OU votre nouveau mot de passe ne correspond pas entre les deux champs.</div>');
                 }
             })
             .catch(error => {

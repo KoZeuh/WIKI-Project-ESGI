@@ -2,7 +2,14 @@
 
 <div class="row justify-content-center mx-2 mt-3">
     <h2 class="text-center">Les deux articles du jour</h2>
+    <?php if (count($formattedArticlesOfTheDay) === 0): ?>
+        <div class="alert alert-warning text-center" role="alert">
+            Aucun article du jour trouvé
+        </div>
+    <?php endif; ?>
+
     <?php foreach ($formattedArticlesOfTheDay as $formattedArticle): ?>
+
         <div class="col-sm-12 col-md-6 col-lg-4">
             <a href="/article/show/<?= $formattedArticle['article']->getId() ?>">
                 <div class="card">
@@ -30,14 +37,17 @@
                     </div>
                 </div>
             </a>
-        </div>
+        </div> 
     <?php endforeach; ?>
 </div>
 
+<h2 class="text-center mt-3 mb-3">Quelques articles du mois</h2>
+<?php if (count($formattedArticlesOfTheMonth) === 0): ?>
+    <div class="alert alert-warning text-center" role="alert">Aucun article du jour trouvé</div>
+<?php endif; ?>
 
 <div class="container">
     <section class="mx-auto my-5">
-        <h2 class="text-center">Quelques articles du mois</h2>
         <div class="row">
             <?php foreach ($formattedArticlesOfTheMonth as $formattedArticle): ?>
                 <div class="col-md-4">

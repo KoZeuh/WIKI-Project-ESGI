@@ -69,9 +69,7 @@
                 <?php foreach ($formattedArticle['comments'] as $comment): ?>
                     <div class="card-body">
                         <div class="d-flex flex-start">
-                            <img class="rounded-circle shadow-1-strong me-3"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar"
-                                 width="60" height="60"/>
+                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg" class="rounded-circle me-3" height="50px" width="50px" alt="avatar">
                             <div>
                                 <h6 class="fw-bold mb-1"><?= $comment['createdByUsername'] ?></h6>
                                 <div class="d-flex align-items-center mb-3">
@@ -140,8 +138,9 @@
         <?php endforeach; ?>
 
         $('#versionSelect').on('change', function () {
+            var selectedVersionId = $(this).val();
             var selectedVersion = versions.find(function (version) {
-                return version.id == $(this).val()
+                return version.id == selectedVersionId
             });
 
             $('#articleContent').html(selectedVersion.content);
