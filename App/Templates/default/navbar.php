@@ -57,7 +57,7 @@
                 <div class="dropdown">
                     <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                        id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                        <img src="https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Wiki-black.png/842px-Wiki-black.png"
                              class="rounded-circle" height="25"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
