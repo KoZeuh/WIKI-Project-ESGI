@@ -5,6 +5,7 @@ namespace App\Model\Repository;
 use App\Database\Database;
 use App\Model\Entity\Article;
 use App\Model\Entity\Tag;
+use App\Model\Entity\Version;
 use PDO;
 use PDOException;
 
@@ -55,43 +56,49 @@ class TagArticleRepository
         }
     }
 
-    public function getArticlesByTagId($tagId)
+    public function getVersionArticleByTagIg($tagIg)
     {
         try {
-            $query = $this->db->prepare('SELECT * FROM tag_article WHERE tag_id = :tagId');
-            $query->execute(['tagId' => $tagId]);
-            $query = $query->fetchAll(PDO::FETCH_ASSOC);
+            $query = "
+                SELECT version_article.*
+                FROM version_article
+                JOIN article ON version_article.article_id = article.id
+                JOIN tag_article ON article.id = tag_article.article_id
+                JOIN tag ON tag_article.tag_id = tag.id
+                WHERE tag.id = :tagId;
+            ";
 
-            $articlesObjects = [];
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':tagId', $tagIg);
+            $statement->execute();
 
-            foreach ($query as $article) {
-                $articlesObjects[] = new Article($article['article_id'], $article['createdAt'], $article['user_id']);
+            $versionArticlesData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!$versionArticlesData) {
+                return [];
             }
 
-            return $articlesObjects;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    public function getArticlesByTagName($tagName)
-    {
-        try {
-            $query = $this->db->prepare('SELECT * FROM tag_article WHERE tag_id = (SELECT id FROM tag WHERE name = :tagName)');
-            $query->execute(['tagName' => $tagName]);
-            $query = $query->fetchAll(PDO::FETCH_ASSOC);
-
-            $articlesObjects = [];
-
-            foreach ($query as $article) {
-                $articlesObjects[] = new Article($article['article_id'], $article['createdAt'], $article['user_id']);
+            $versionArticles = [];
+            foreach ($versionArticlesData as $versionArticleData) {
+                $versionArticles[] = new Version(
+                    $versionArticleData['id'],
+                    $versionArticleData['title'],
+                    $versionArticleData['isValid'],
+                    $versionArticleData['content'],
+                    $versionArticleData['updatedAt'],
+                    $versionArticleData['article_id'],
+                    $versionArticleData['user_id'],
+                );
             }
 
-            return $articlesObjects;
+            return $versionArticles;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo "Erreur de la base de données : " . $e->getMessage();
+            return [];
         }
     }
+    
+
 
     public function addTagArticle($articleId, $tagId)
     {

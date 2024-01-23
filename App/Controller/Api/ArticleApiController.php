@@ -11,10 +11,17 @@ class ArticleApiController
     public function handleApiRequest()
     {
         $requestMethod = $_SERVER['REQUEST_METHOD'];
+        $uriSegments = explode('/', $_SERVER['REQUEST_URI']);
+
+        $versionId = isset($uriSegments[3]) && is_numeric($uriSegments[3]) ? (int)$uriSegments[3] : null;
 
         switch ($requestMethod) {
             case 'GET':
-                $this->getArticles();
+                if ($versionId !== null) {
+                    $this->getArticleVersions($versionId);
+                } else {
+                    $this->getArticles();
+                }
                 break;
             default:
                 echo '405 Method Not Allowed';
@@ -37,5 +44,33 @@ class ArticleApiController
         header('Content-Type: application/json');
 
         echo json_encode($lastVersionArticles);
+    }
+
+    private function getArticleVersions($id)
+    {
+        $versions = VersionRepository::getInstance()->getVersionsByArticleId($id);
+
+        if (!$versions) {
+            header('Content-Type: application/json');
+            header('HTTP/1.1 404 Not Found');
+            echo json_encode(['error' => 'No article found for id ' . $id ]);
+            
+        } else {
+            $versionsFormatted = [];
+            foreach ($versions as $version) {
+                $versionsFormatted[] = [
+                    'id' =>  $version->getId(),
+                    'title' => $version->getTitle(),
+                    'content' => $version->getContent(),
+                    'updatedAt' => $version->getUpdatedAt(),
+                    'article_id' => $version->getArticleId(),
+                    'user_id' => $version->getUserId()
+                ];
+            }
+
+            header('Content-Type: application/json');
+            echo json_encode($versionsFormatted);
+        }
+
     }
 }

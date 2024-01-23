@@ -123,6 +123,7 @@ class FrontController
                         return call_user_func_array([$controller, $methodName], array_slice($segments, 3));
                     }
                 }
+                header('HTTP/1.1 404 Not Found');
                 echo '404 Not Found';
         }
     }
