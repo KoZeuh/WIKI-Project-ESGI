@@ -8,6 +8,14 @@ use App\Model\Repository\VersionRepository;
 
 class ArticleController
 {
+    public function __construct()
+    {
+        if (!isset($_SESSION['user']) || $_SESSION['user']->getRole() !== 'ROLE_ADMIN') {
+            header('Location: /login');
+            exit();
+        }
+    }
+
     public function delete($id)
     {
         ArticleRepository::getInstance()->deleteArticle($id);

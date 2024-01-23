@@ -125,24 +125,6 @@ class ArticleRepository
         }
     }
 
-    public function getRandomArticle()
-    {
-        try {
-            $query = "SELECT * FROM article ORDER BY RAND() LIMIT 1";
-            $statement = $this->db->query($query);
-            $statement = $statement->fetch(PDO::FETCH_ASSOC);
-
-            if (!$statement) {
-                return [];
-            }
-
-            return new Article($statement['id'], $statement['createdAt'], $statement['user_id']);
-        } catch (PDOException $e) {
-            echo "Erreur de la base de données : " . $e->getMessage();
-            return [];
-        }
-    }
-
     public function getNbArticles()
     {
         try {

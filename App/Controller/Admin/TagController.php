@@ -34,7 +34,6 @@ class TagController
 
     public function delete($id)
     {
-        echo "delete";
         $tag = TagRepository::getInstance()->deleteTag($id);
         if ($tag) {
             header('Location: /admin/tags');

@@ -6,6 +6,14 @@ use App\Model\Repository\VersionRepository;
 
 class VersionController
 {
+    public function __construct()
+    {
+        if (!isset($_SESSION['user']) || $_SESSION['user']->getRole() !== 'ROLE_ADMIN') {
+            header('Location: /login');
+            exit();
+        }
+    }
+
     public function delete($id)
     {
         $articleId = VersionRepository::getInstance()->getArticleIdByVersionId($id);

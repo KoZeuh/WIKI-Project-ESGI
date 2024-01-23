@@ -74,24 +74,6 @@ class VersionRepository
         }
     }
 
-    public function getVersionByArticleId($id)
-    {
-        try {
-            $query = "SELECT * FROM version_article WHERE article_id = :id ORDER BY updatedAt DESC LIMIT 1";
-            $statement = $this->db->prepare($query);
-            $statement->bindParam(':id', $id);
-            $statement->execute();
-
-            $version = $statement->fetch(PDO::FETCH_ASSOC);
-            $versionObject = new Version($version['id'], $version['title'], $version['isValid'], $version['content'], $version['updatedAt'], $version['article_id'], $version['user_id']);
-
-            return $versionObject;
-        } catch (PDOException $e) {
-            echo "Erreur de la base de données : " . $e->getMessage();
-            return [];
-        }
-    }
-
     public function getLastVersionByArticleId($id)
     {
         try {
@@ -123,24 +105,6 @@ class VersionRepository
             $statement->bindParam(':user_id', $version['user_id']);
             $statement->execute();
             return $this->db->lastInsertId();
-        } catch (PDOException $e) {
-            echo "Erreur de la base de données : " . $e->getMessage();
-        }
-    }
-
-    public function updateVersion($version)
-    {
-        try {
-            $query = "UPDATE version_article SET title = :title, isValid = :isValid, content = :content, updatedAt = :updatedAt, article_id = :article_id, user_id = :user_id WHERE id = :id";
-            $statement = $this->db->prepare($query);
-            $statement->bindParam(':id', $version['id']);
-            $statement->bindParam(':title', $version['title']);
-            $statement->bindParam(':isValid', $version['isValid']);
-            $statement->bindParam(':content', $version['content']);
-            $statement->bindParam(':updatedAt', $version['updatedAt']);
-            $statement->bindParam(':article_id', $version['article_id']);
-            $statement->bindParam(':user_id', $version['user_id']);
-            $statement->execute();
         } catch (PDOException $e) {
             echo "Erreur de la base de données : " . $e->getMessage();
         }
