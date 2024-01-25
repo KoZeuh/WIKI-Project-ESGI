@@ -1,0 +1,283 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "5721396d-0f2f-4955-b55c-aea07d5b89ba",
+        "name": "wiki_esgi"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Scenario",
+            "id": "b025482b-3f2e-4e0b-aa78-cd260fa304cb",
+            "name": "Scenario 1"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/articles"
+                },
+                "id": "71e2e91e-fd88-4f06-9319-d9b663c18c1f",
+                "name": "GET Articles",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "apiKey",
+                    "value": "${\"apiKey\"}"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/categories"
+                },
+                "id": "48dd7603-38bf-47dd-8648-06843d46337b",
+                "name": "GET Categories",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "apiKey",
+                    "value": " ${\"apiKey\"} "
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/users"
+                },
+                "id": "9b2ba58b-7fa8-463b-9592-f73ea671c18b",
+                "name": "404 Route Not Found",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "apiKey",
+                    "value": "${\"apiKey\"}"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/articles"
+                },
+                "id": "695dc12a-21b0-4dcc-bda8-55ad26fd2ec2",
+                "name": "401 Unauthorized",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/categories/5"
+                },
+                "id": "ec9553af-a381-43a0-8444-58ef63125e7f",
+                "name": "GET Articles By Category Id",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "apiKey",
+                    "value": "${\"apiKey\"}"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/articles/4"
+                },
+                "id": "db4d45ac-0d17-4fca-80d5-75e84b1cd474",
+                "name": "GET Article Version By Article Id",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "apiKey",
+                    "value": "${\"apiKey\"}"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/articles/78"
+                },
+                "id": "2cb89709-7bb4-4c22-9cb1-30907448da64",
+                "name": "404 ID Not Found",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "apiKey",
+                    "value": "${\"apiKey\"}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

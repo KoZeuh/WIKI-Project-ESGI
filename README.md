@@ -8,8 +8,11 @@
 <details>
   <summary><strong>➡️ Screenshots</strong></summary>
   <br/>
-  <img align="left" src="todo.png" width="280" />
-  <img src="todo.png" width="280" />
+  <img align="left" src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img1.png" width="280" />
+  <img src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img2.png" width="280" />
+  <br/>
+  <img align="left" src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img3.png" width="280" />
+  <img src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img4.png" width="280" />
 </details>
 
 ### Features 🚀
@@ -74,14 +77,14 @@
 - Full "WYSIWYG" implementation.
 - Implement article creation for users.
 - Complete production of the management panel.
-- Creation of the MCD.
+- Creation of the UML diagram.
   
 [@antoinebtn](https://github.com/antoinebtn)
-- Creation of the UML diagram.
 - Router implementation.
 - Password change.
 - Search by key words.
 - Complete realization of the REST API.
+- Creation of the MCD.
   
 ## License 📄
 
