@@ -63,17 +63,26 @@
 
 [@KoZeuh](https://github.com/KoZeuh)
 - Site design.
+- Article list and display of a selected article.
 - Display of 2 articles of the day and articles of the month.
+- List of article versions and display of a selected version.
 - User authentication.
 - Content categorization / Search by category.
 
 [@Nikoolaii](https://github.com/Nikoolaii)
+- Display 1 article of the day. (Changed to 2 articles currently by KoZeuh)
+- Full "WYSIWYG" implementation.
+- Implement article creation for users.
 - Complete production of the management panel.
 - Creation of the MCD.
   
 [@antoinebtn](https://github.com/antoinebtn)
 - Creation of the UML diagram.
+- Router implementation.
+- Password change.
+- Search by key words.
 - Complete realization of the REST API.
+  
 ## License 📄
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
