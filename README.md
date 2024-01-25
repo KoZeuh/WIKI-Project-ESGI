@@ -1,31 +1,79 @@
-Les fonctionnalités attendues sont :
+# Representation of a "WIKI" #
 
-1) Authentification des utilisateurs et gestion des rôles :<br>
-a. Inscription et connexion des utilisateurs. :white_check_mark: <br>
-b. Gestion des rôles des utilisateurs pour pouvoir désigner des administrateurs du CMS. :white_check_mark: <br>
+<p align="center">
+   <strong>It's a simple web application that lets you write articles with versions and comments.</strong>
+   <strong>A user, article and version management panel is also available.</strong>
+</p>
 
-2) Moteur de recherche :<br>
-a. Par mots-clés :x: <br>
-b. Par catégorie :white_check_mark: <br>
-   
-3) Éditeur WYSIWYG pour créer, modifier et formater le contenu :white_check_mark: <br>
+<details>
+  <summary><strong>➡️ Screenshots</strong></summary>
+  <br/>
+  <img align="left" src="todo.png" width="280" />
+  <img src="todo.png" width="280" />
+</details>
 
-4) Accès à un historique : <br>
-a. Révisions :x: <br>
-b. Possibilité d'afficher les versions précédentes. :white_check_mark: <br>
-   
-6) Catégorisation du contenu :white_check_mark: <br>
-   
-8) Système de messagerie intégrée pour la communication entre utilisateurs :x: <br>
-   
-10) Présentation de 2 articles « du jour» choisi quotidiennement de manière :white_check_mark: <br>
-    
-12) API REST pour accéder au contenu de manière programmatique : <br>
-a. Une API respectant le standard REST permettra de requêter le contenu au format JSON. :x: <br>
-b. L'utilisation de l'API demande la création d'une clé d'authentification par l'utilisateur :x: <br>
+### Features 🚀
 
-14) Backoffice réservé aux administrateurs du CMS : <br>
-a. Gestion des utilisateurs :white_check_mark: <br>
-b. Gestion des articles :x: <br>
-c. Gestion des tags :white_check_mark: <br>
-d. Gestion des évaluations et commentaires :x: <br>
+- 🌐 **Authentication & role management**
+
+- 🔄 **Content categorization**
+
+- 📊 **Search engine by category and/or keywords**
+
+- ✏️ **WYSIWYG for content creation, modification and formatting**
+
+- 📶 **Article version history**
+
+- 🧩 **Display of 2 randomly chosen articles of the day**
+
+- 🖱️ **API REST to access content programmatically**
+
+- ⚙️ **Management panel for CMS administrators**
+  
+## Prerequisites for use 🛠️
+- NONE
+
+## Prerequisites for installation 🛠️
+
+- PHP 8.0.X
+- MariaDB 10.10.X
+
+## How to Run the Project ▶️
+
+1. Clone this repository to your local machine.
+2. Import SQL file.
+3. Modify your database connection information. (`App/Database/Database.php`)
+(__!! The storage of this kind of data is advised to be in an environment file !!! We didn't have time to set it up...__)
+
+## Administrator Role 🔑
+
+1. Create a user account.
+2. Replace "ROLE_USER" with your user's "ROLE_ADMIN" in the "users" table and in the "role" field.
+3. Reconnect to site to obtain role permissions.
+
+
+## How to use the API 🔍
+
+1. Install the extension [Talend](https://chromewebstore.google.com/detail/talend-api-tester-freeed/aejoelaoggembcahagimdiliamlcdmfm)
+2. Import JSON file [click here](https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/APIFile.json)
+3. Add the API key to Talend's environment variables (top left, same as Postman).
+4. The API key is visible in the user profile.
+
+## Authors ✨
+
+[@KoZeuh](https://github.com/KoZeuh)
+- Site design.
+- Display of 2 articles of the day and articles of the month.
+- User authentication.
+- Content categorization / Search by category.
+
+[@Nikoolaii](https://github.com/Nikoolaii)
+- Complete production of the management panel.
+- Creation of the MCD.
+  
+[@antoinebtn](https://github.com/antoinebtn)
+- Creation of the UML diagram.
+- Complete realization of the REST API.
+## License 📄
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
