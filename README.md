@@ -8,11 +8,11 @@
 <details>
   <summary><strong>➡️ Screenshots</strong></summary>
   <br/>
-  <img align="left" src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img1.png" width="280" />
-  <img src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img2.png" width="280" />
+  <img align="left" src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img1.png" width="280" target="_blank"/>
+  <img src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img2.png" width="280" target="_blank"/>
   <br/>
-  <img align="left" src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img3.png" width="280" />
-  <img src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img4.png" width="280" />
+  <img align="left" src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img3.png" width="280" target="_blank"/>
+  <img src="https://github.com/KoZeuh/WIKI-Project-ESGI/blob/main/img/img4.png" width="280" target="_blank"/>
 </details>
 
 ### Features 🚀
