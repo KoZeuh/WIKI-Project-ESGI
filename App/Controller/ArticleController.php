@@ -85,7 +85,7 @@ class ArticleController
 
         $version = [
             'title' => $title,
-            'isValid' => 0,
+            'isValid' => 1,
             'content' => $content,
             'updatedAt' => $date,
             'article_id' => $article->getId(),
@@ -122,7 +122,7 @@ class ArticleController
 
         $version = [
             'title' => $title,
-            'isValid' => 0,
+            'isValid' => 1,
             'content' => $content,
             'updatedAt' => $date,
             'article_id' => $article_id,
